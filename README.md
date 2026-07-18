@@ -1,8 +1,8 @@
-# SiteVista
+# SEO Audit Pro
 
 **Clear SEO Insights. Practical Growth Strategies.**
 
-SiteVista is an SEO audit blog website built with Next.js 16, Sanity CMS, and Tailwind CSS. It publishes SEO guides, website audit case studies, and provides a platform for offering manual SEO audit services.
+SEO Audit Pro is an SEO audit blog website built with Next.js 16, Sanity CMS, and Tailwind CSS. It publishes SEO guides, website audit case studies, and provides a platform for offering manual SEO audit services.
 
 ## Tech Stack
 
@@ -18,7 +18,7 @@ SiteVista is an SEO audit blog website built with Next.js 16, Sanity CMS, and Ta
 ## Project Structure
 
 ```
-SiteVista/
+SEO Audit Pro/
 ├── src/
 │   ├── app/                    # Next.js App Router pages
 │   │   ├── layout.tsx          # Root layout (Header + Footer)
@@ -148,7 +148,7 @@ The editor supports 12 custom content blocks:
 
 ### 10. Custom Domain
 
-1. In Vercel dashboard: Settings → Domains → Add `sitevista.net`
+1. In Vercel dashboard: Settings → Domains → Add `seoauditpro.cloud`
 2. Update DNS: Add CNAME record pointing to `cname.vercel-dns.com`
 3. Update `NEXT_PUBLIC_SITE_URL` in Vercel env vars
 

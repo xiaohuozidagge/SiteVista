@@ -44,13 +44,13 @@ export function Footer() {
               className="inline-flex items-center gap-2 text-white no-underline font-[family-name:var(--font-heading)] font-bold text-xl tracking-tight mb-4"
             >
               <div className="h-8 w-8 rounded-[var(--radius-sm)] bg-[var(--color-accent)] flex items-center justify-center text-white text-sm font-extrabold">
-                SV
+                SEO
               </div>
-              <span>SiteVista</span>
+              <span>SEO Audit Pro</span>
             </Link>
             <p className="text-sm text-white/70 leading-relaxed mt-4 max-w-xs">
-              Clear SEO insights and practical growth strategies. We provide
-              manually prepared SEO audits for businesses and website owners.
+              Practical SEO audit guides, independent case studies, and manually
+              prepared website audits with clear, prioritized recommendations.
             </p>
           </div>
 
@@ -112,7 +112,7 @@ export function Footer() {
         {/* Legal Row */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/50">
-            &copy; {year} SiteVista. All rights reserved.
+            &copy; {year} SEO Audit Pro. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             {legalLinks.map((link) => (

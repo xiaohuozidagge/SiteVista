@@ -27,7 +27,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       position: index + 1,
       item: {
         "@id": item.href
-          ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://sitevista.net"}${item.href}`
+          ? `${process.env.NEXT_PUBLIC_SITE_URL || "https://seoauditpro.cloud"}${item.href}`
           : undefined,
         name: item.label,
       },

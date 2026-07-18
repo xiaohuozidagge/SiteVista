@@ -7,7 +7,7 @@ interface BreadcrumbSchemaProps {
   items: CrumbItem[];
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sitevista.net";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://seoauditpro.cloud";
 
 export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
   if (!items || items.length === 0) return null;

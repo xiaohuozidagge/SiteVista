@@ -1,34 +1,25 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { client } from "@/lib/sanity.client";
-import { HOME_PAGE_QUERY } from "@/lib/sanity.queries";
-import type { AuditCaseData, PostCardData } from "@/lib/sanity.types";
+import { getAllPosts, toBlogCardData } from "@/lib/content/blog";
+import { getAllCases, toCaseCardData } from "@/lib/content/cases";
+import type { BlogCardData, CaseCardData } from "@/lib/content/types";
 import { HomeNewsletter } from "@/components/forms/HomeNewsletter";
 
 export const metadata: Metadata = {
-  title: "Clear SEO Insights. Practical Growth Strategies.",
+  title: "Website SEO Audits, Guides & Case Studies | SEO Audit Pro",
   description:
-    "SiteVista provides practical SEO guides, website audit case studies, and manually prepared SEO audits for businesses and website owners.",
+    "Explore practical SEO guides, website audit case studies, and manually prepared SEO audits with clear, prioritized recommendations.",
 };
 
-interface HomeData {
-  featuredCase?: AuditCaseData | null;
-  latestCases?: AuditCaseData[];
-  seoAuditGuides?: PostCardData[];
-  technicalSeo?: PostCardData[];
-  contentSeo?: PostCardData[];
-}
+export default function HomePage() {
+  const allPosts = getAllPosts();
+  const allCases = getAllCases();
 
-async function getHomeData(): Promise<HomeData | null> {
-  try {
-    return await client.fetch<HomeData>(HOME_PAGE_QUERY);
-  } catch {
-    return null;
-  }
-}
-
-export default async function HomePage() {
-  const data = await getHomeData();
+  const featuredCase = allCases.find((c) => c.frontmatter.featured) || allCases[0] || null;
+  const latestCases = allCases.slice(0, 3);
+  const seoAuditGuides = allPosts.filter((p) => p.frontmatter.category === "seo-audit-guides").slice(0, 3);
+  const technicalSeo = allPosts.filter((p) => p.frontmatter.category === "technical-seo").slice(0, 3);
+  const contentSeo = allPosts.filter((p) => p.frontmatter.category === "content-seo").slice(0, 3);
 
   return (
     <>
@@ -40,8 +31,8 @@ export default async function HomePage() {
             <br className="hidden sm:block" /> Practical Growth Strategies.
           </h1>
           <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto text-balance">
-            SiteVista provides practical SEO guides, website audit case studies,
-            and manually prepared SEO audits for businesses and website owners.
+            SEO Audit Pro provides practical SEO guides, website audit case studies,
+            and manually prepared audits designed to identify issues and prioritize improvements.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -62,60 +53,60 @@ export default async function HomePage() {
 
       <div className="container-site py-16 lg:py-24 space-y-24">
         {/* Featured SEO Audit Case */}
-        <ArticleSection
-          title="Featured SEO Audit Case"
-          viewAllHref="/seo-audit-cases/"
-          viewAllLabel="View all cases"
-          items={data?.latestCases ? [data.latestCases[0]].filter(Boolean) as AuditCaseData[] : []}
-          renderCard={(item) => <CaseCard caseItem={item} featured />}
-          emptyMessage="No SEO audit cases published yet."
-        />
+        {featuredCase ? (
+          <section>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)]">Featured SEO Audit Case</h2>
+              <Link href="/seo-audit-cases/" className="text-sm font-medium text-[var(--color-accent)] hover:underline">View all cases →</Link>
+            </div>
+            <Link href={`/seo-audit-cases/${featuredCase.slug}/`} className="group block">
+              <article className="grid lg:grid-cols-2 gap-8 items-center border border-[var(--color-border)] rounded-xl overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
+                <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
+                  {featuredCase.frontmatter.featuredImage ? (
+                    <img src={featuredCase.frontmatter.featuredImage} alt={featuredCase.frontmatter.featuredImageAlt || featuredCase.frontmatter.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-[var(--color-text-muted)] text-sm">Featured Image</span>
+                  )}
+                </div>
+                <div className="p-6 lg:p-8 lg:pl-0">
+                  {featuredCase.frontmatter.industry && (
+                    <span className="inline-block text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-2">{featuredCase.frontmatter.industry}</span>
+                  )}
+                  <h3 className="text-xl lg:text-2xl font-bold font-[family-name:var(--font-heading)] group-hover:text-[var(--color-accent)] transition-colors">{featuredCase.frontmatter.title}</h3>
+                  <p className="mt-3 text-[var(--color-text-secondary)] line-clamp-2">{featuredCase.frontmatter.description}</p>
+                  {featuredCase.frontmatter.auditDate && (
+                    <time dateTime={featuredCase.frontmatter.auditDate} className="mt-4 inline-block text-sm text-[var(--color-text-muted)]">
+                      Audit Date: {new Date(featuredCase.frontmatter.auditDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                    </time>
+                  )}
+                  <span className="mt-4 inline-flex items-center text-sm font-semibold text-[var(--color-accent)]">Read Case Study →</span>
+                </div>
+              </article>
+            </Link>
+          </section>
+        ) : (
+          <section>
+            <div className="text-center py-12 border border-dashed border-[var(--color-border)] rounded-xl">
+              <p className="text-[var(--color-text-muted)]">No featured SEO audit case yet. Check back soon.</p>
+            </div>
+          </section>
+        )}
 
         {/* Latest SEO Audit Cases */}
-        <ArticleSection
-          title="Latest SEO Audit Cases"
-          viewAllHref="/seo-audit-cases/"
-          viewAllLabel="View all cases"
-          items={data?.latestCases}
-          renderCard={(item) => <CaseCard key={item._id} caseItem={item} />}
-          emptyMessage="No SEO audit cases published yet."
-        />
+        <ArticleSection title="Latest SEO Audit Cases" viewAllHref="/seo-audit-cases/" viewAllLabel="View all cases" items={latestCases.map(toCaseCardData)} renderCard={(item) => <CaseCard key={item.slug} caseItem={item} />} emptyMessage="No SEO audit cases published yet." />
 
         {/* SEO Audit Guides */}
-        <ArticleSection
-          title="SEO Audit Guides"
-          viewAllHref="/seo-audit-guides/"
-          viewAllLabel="View all guides"
-          items={data?.seoAuditGuides}
-          renderCard={(item) => <ArticleCard key={item._id} post={item} />}
-          emptyMessage="No SEO audit guides published yet."
-        />
+        <ArticleSection title="SEO Audit Guides" viewAllHref="/seo-audit-guides/" viewAllLabel="View all guides" items={seoAuditGuides.map(toBlogCardData)} renderCard={(item) => <ArticleCard key={item.slug} post={item} />} emptyMessage="No SEO audit guides published yet." />
 
         {/* Technical SEO */}
-        <ArticleSection
-          title="Technical SEO"
-          viewAllHref="/technical-seo/"
-          viewAllLabel="View all articles"
-          items={data?.technicalSeo}
-          renderCard={(item) => <ArticleCard key={item._id} post={item} />}
-          emptyMessage="No technical SEO articles published yet."
-        />
+        <ArticleSection title="Technical SEO" viewAllHref="/technical-seo/" viewAllLabel="View all articles" items={technicalSeo.map(toBlogCardData)} renderCard={(item) => <ArticleCard key={item.slug} post={item} />} emptyMessage="No technical SEO articles published yet." />
 
         {/* Content & Keywords */}
-        <ArticleSection
-          title="Content & Keywords"
-          viewAllHref="/content-seo/"
-          viewAllLabel="View all articles"
-          items={data?.contentSeo}
-          renderCard={(item) => <ArticleCard key={item._id} post={item} />}
-          emptyMessage="No content SEO articles published yet."
-        />
+        <ArticleSection title="Content & Keywords" viewAllHref="/content-seo/" viewAllLabel="View all articles" items={contentSeo.map(toBlogCardData)} renderCard={(item) => <ArticleCard key={item.slug} post={item} />} emptyMessage="No content SEO articles published yet." />
 
-        {/* Why SiteVista */}
+        {/* Why SEO Audit Pro */}
         <section>
-          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center mb-12">
-            Why SiteVista
-          </h2>
+          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center mb-12">Why SEO Audit Pro</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { title: "Manual SEO Analysis", desc: "Every audit is prepared by an experienced SEO analyst — not an automated tool generating generic reports." },
@@ -153,8 +144,8 @@ export default async function HomePage() {
 }
 
 /* ─── Reusable Section ────────────────────────────────────── */
-function ArticleSection<T extends { _id: string }>({ title, viewAllHref, viewAllLabel, items, renderCard, emptyMessage }: {
-  title: string; viewAllHref: string; viewAllLabel: string; items?: T[]; renderCard: (item: T) => React.ReactNode; emptyMessage: string;
+function ArticleSection<T extends { slug: string }>({ title, viewAllHref, viewAllLabel, items, renderCard, emptyMessage }: {
+  title: string; viewAllHref: string; viewAllLabel: string; items: T[]; renderCard: (item: T) => React.ReactNode; emptyMessage: string;
 }) {
   return (
     <section>
@@ -162,7 +153,7 @@ function ArticleSection<T extends { _id: string }>({ title, viewAllHref, viewAll
         <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)]">{title}</h2>
         <Link href={viewAllHref} className="text-sm font-medium text-[var(--color-accent)] hover:underline">{viewAllLabel} →</Link>
       </div>
-      {items && items.length > 0 ? (
+      {items.length > 0 ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{items.map(renderCard)}</div>
       ) : (
         <div className="text-center py-12 border border-dashed border-[var(--color-border)] rounded-xl"><p className="text-[var(--color-text-muted)]">{emptyMessage}</p></div>
@@ -172,23 +163,23 @@ function ArticleSection<T extends { _id: string }>({ title, viewAllHref, viewAll
 }
 
 /* ─── Article Card ─────────────────────────────────────────── */
-function ArticleCard({ post }: { post: PostCardData }) {
+function ArticleCard({ post }: { post: BlogCardData }) {
   return (
-    <Link href={`/blog/${post.slug?.current}/`} className="group block border border-[var(--color-border)] rounded-lg overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
+    <Link href={`/blog/${post.slug}/`} className="group block border border-[var(--color-border)] rounded-lg overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
       <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
-        {post.featuredImage?.asset?.url ? (
-          <img src={`${post.featuredImage.asset.url}?w=600&h=338&fit=crop&auto=format`} alt={post.featuredImage.alt || post.title} className="w-full h-full object-cover" loading="lazy" />
+        {post.featuredImage ? (
+          <img src={post.featuredImage} alt={post.featuredImageAlt || post.title} className="w-full h-full object-cover" loading="lazy" />
         ) : (
           <span className="text-[var(--color-text-muted)] text-sm">Featured Image</span>
         )}
       </div>
       <div className="p-5">
-        {post.category && <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">{post.category.title}</span>}
+        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">{post.categoryName}</span>
         <h3 className="mt-2 font-bold font-[family-name:var(--font-heading)] group-hover:text-[var(--color-accent)] transition-colors line-clamp-2">{post.title}</h3>
-        {post.excerpt && <p className="mt-2 text-sm text-[var(--color-text-secondary)] line-clamp-2">{post.excerpt}</p>}
+        <p className="mt-2 text-sm text-[var(--color-text-secondary)] line-clamp-2">{post.description}</p>
         <div className="mt-3 flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
-          {post.publishedAt && <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</time>}
-          {post.readingTime != null && post.readingTime > 0 && <span>{post.readingTime} min read</span>}
+          <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</time>
+          <span>{post.readingTime} min read</span>
         </div>
       </div>
     </Link>
@@ -196,12 +187,12 @@ function ArticleCard({ post }: { post: PostCardData }) {
 }
 
 /* ─── Case Card ────────────────────────────────────────────── */
-function CaseCard({ caseItem, featured }: { caseItem: AuditCaseData; featured?: boolean }) {
+function CaseCard({ caseItem }: { caseItem: CaseCardData }) {
   return (
-    <Link href={`/seo-audit-cases/${caseItem.slug?.current}/`} className={`group block border border-[var(--color-border)] rounded-lg overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow ${featured ? "lg:col-span-2 lg:grid lg:grid-cols-2" : ""}`}>
+    <Link href={`/seo-audit-cases/${caseItem.slug}/`} className="group block border border-[var(--color-border)] rounded-lg overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
       <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
-        {caseItem.featuredImage?.asset?.url ? (
-          <img src={`${caseItem.featuredImage.asset.url}?w=600&h=338&fit=crop&auto=format`} alt={caseItem.featuredImage.alt || caseItem.title} className="w-full h-full object-cover" loading="lazy" />
+        {caseItem.featuredImage ? (
+          <img src={caseItem.featuredImage} alt={caseItem.featuredImageAlt || caseItem.title} className="w-full h-full object-cover" loading="lazy" />
         ) : (
           <span className="text-[var(--color-text-muted)] text-sm">Case Image</span>
         )}
@@ -209,7 +200,7 @@ function CaseCard({ caseItem, featured }: { caseItem: AuditCaseData; featured?: 
       <div className="p-5">
         {caseItem.industry && <span className="inline-block text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)] bg-[var(--color-bg-secondary)] px-2 py-0.5 rounded">{caseItem.industry}</span>}
         <h3 className="mt-2 font-bold font-[family-name:var(--font-heading)] group-hover:text-[var(--color-accent)] transition-colors line-clamp-2">{caseItem.title}</h3>
-        {caseItem.excerpt && <p className="mt-2 text-sm text-[var(--color-text-secondary)] line-clamp-2">{caseItem.excerpt}</p>}
+        <p className="mt-2 text-sm text-[var(--color-text-secondary)] line-clamp-2">{caseItem.description}</p>
         {caseItem.auditDate && <time dateTime={caseItem.auditDate} className="mt-3 inline-block text-xs text-[var(--color-text-muted)]">Audit: {new Date(caseItem.auditDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</time>}
       </div>
     </Link>

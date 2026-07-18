@@ -1,9 +1,10 @@
 import { MetadataRoute } from "next";
-import { client } from "@/lib/sanity.client";
+import { getAllPosts } from "@/lib/content/blog";
+import { getAllCases } from "@/lib/content/cases";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sitevista.net";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://seoauditpro.cloud";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
     { url: `${SITE_URL}/seo-audit-cases/`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
@@ -19,35 +20,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/refund-policy/`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.1 },
   ];
 
-  // Fetch dynamic routes from Sanity
-  let dynamicRoutes: MetadataRoute.Sitemap = [];
-  try {
-    const [posts, cases] = await Promise.all([
-      client.fetch<{ slug: string; updatedAt?: string }[]>(
-        `*[_type == "post" && defined(slug.current)]{ "slug": slug.current, updatedAt }`
-      ),
-      client.fetch<{ slug: string; updatedAt?: string }[]>(
-        `*[_type == "seoAuditCase" && defined(slug.current)]{ "slug": slug.current, updatedAt }`
-      ),
-    ]);
+  const posts = getAllPosts().filter((p) => !p.frontmatter.noIndex);
+  const cases = getAllCases().filter((c) => !c.frontmatter.noIndex);
 
-    dynamicRoutes = [
-      ...(posts || []).map((p) => ({
-        url: `${SITE_URL}/blog/${p.slug}/`,
-        lastModified: p.updatedAt ? new Date(p.updatedAt) : new Date(),
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
-      })),
-      ...(cases || []).map((c) => ({
-        url: `${SITE_URL}/seo-audit-cases/${c.slug}/`,
-        lastModified: c.updatedAt ? new Date(c.updatedAt) : new Date(),
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
-      })),
-    ];
-  } catch {
-    // Sanity not configured yet — return static routes only
-  }
+  const dynamicRoutes: MetadataRoute.Sitemap = [
+    ...posts.map((p) => ({
+      url: `${SITE_URL}/blog/${p.slug}/`,
+      lastModified: p.frontmatter.updatedAt ? new Date(p.frontmatter.updatedAt) : new Date(p.frontmatter.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    ...cases.map((c) => ({
+      url: `${SITE_URL}/seo-audit-cases/${c.slug}/`,
+      lastModified: c.frontmatter.updatedAt ? new Date(c.frontmatter.updatedAt) : new Date(c.frontmatter.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
 
   return [...staticRoutes, ...dynamicRoutes];
 }

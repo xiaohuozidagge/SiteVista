@@ -3,14 +3,14 @@ import Link from "next/link";
 import { OrganizationSchema } from "@/components/seo/OrganizationSchema";
 
 export const metadata: Metadata = {
-  title: "About SiteVista",
+  title: "About SEO Audit Pro",
   description:
-    "SiteVista provides manually prepared SEO audits and practical search optimization resources for businesses, marketers, and website owners.",
+    "SEO Audit Pro provides manually prepared SEO audits and practical search optimization resources for businesses, marketers, and website owners.",
   alternates: { canonical: "/about/" },
   openGraph: {
-    title: "About SiteVista",
+    title: "About SEO Audit Pro",
     description:
-      "SiteVista provides manually prepared SEO audits and practical search optimization resources.",
+      "SEO Audit Pro provides manually prepared SEO audits and practical search optimization resources.",
   },
 };
 
@@ -81,10 +81,10 @@ export default function AboutPage() {
       <section className="bg-[var(--color-primary)] text-white py-16 lg:py-24">
         <div className="container-content text-center">
           <h1 className="text-3xl lg:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance leading-tight">
-            About SiteVista
+            About SEO Audit Pro
           </h1>
           <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto text-balance leading-relaxed">
-            SiteVista provides manually prepared SEO audits and practical search
+            SEO Audit Pro provides manually prepared SEO audits and practical search
             optimization resources for businesses, marketers, and website owners.
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function AboutPage() {
             Clear SEO Insights, Practical Recommendations
           </h2>
           <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
-            SiteVista does not just list errors that SEO tools find. Every audit
+            SEO Audit Pro does not just list errors that SEO tools find. Every audit
             helps you understand:
           </p>
           <div className="mt-10 grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
@@ -140,10 +140,10 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* How SiteVista Works */}
+        {/* How SEO Audit Pro Works */}
         <section className="bg-[var(--color-bg-secondary)] rounded-xl p-10 lg:p-16">
           <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            How SiteVista Works
+            How SEO Audit Pro Works
           </h2>
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map((s) => (
@@ -173,10 +173,10 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Why Choose SiteVista */}
+        {/* Why Choose SEO Audit Pro */}
         <section>
           <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Why Choose SiteVista
+            Why Choose SEO Audit Pro
           </h2>
           <div className="mt-10 grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {whyItems.map((item) => (

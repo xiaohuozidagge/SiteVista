@@ -18,19 +18,19 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "SiteVista — Clear SEO Insights. Practical Growth Strategies.",
-    template: "%s | SiteVista",
+    default: "Website SEO Audits, Guides & Case Studies | SEO Audit Pro",
+    template: "%s | SEO Audit Pro",
   },
   description:
-    "SiteVista provides practical SEO guides, website audit case studies, and manually prepared SEO audits for businesses and website owners.",
+    "Explore practical SEO guides, website audit case studies, and manually prepared SEO audits with clear, prioritized recommendations.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://sitevista.net"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://seoauditpro.cloud"
   ),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    siteName: "SiteVista",
+    siteName: "SEO Audit Pro",
     type: "website",
     locale: "en_US",
   },

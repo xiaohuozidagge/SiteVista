@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Contact SiteVista",
-  description: "Get in touch with SiteVista about SEO audits, questions, or collaboration opportunities.",
+  title: "Contact SEO Audit Pro",
+  description: "Get in touch with SEO Audit Pro about SEO audits, questions, or collaboration opportunities.",
 };
 
 export default function ContactPage() {

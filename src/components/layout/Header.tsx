@@ -53,12 +53,12 @@ export function Header() {
         <Link
           href="/"
           className="flex items-center gap-2 text-[var(--color-primary)] no-underline font-[family-name:var(--font-heading)] font-bold text-xl tracking-tight"
-          aria-label="SiteVista Home"
+          aria-label="SEO Audit Pro Home"
         >
           <div className="h-8 w-8 rounded-[var(--radius-sm)] bg-[var(--color-accent)] flex items-center justify-center text-white text-sm font-extrabold">
-            SV
+            SEO
           </div>
-          <span>SiteVista</span>
+          <span>SEO Audit Pro</span>
         </Link>
 
         {/* Desktop Navigation */}

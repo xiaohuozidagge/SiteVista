@@ -1,13 +1,13 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sitevista.net";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://seoauditpro.cloud";
 
 export function OrganizationSchema() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "SiteVista",
+    name: "SEO Audit Pro",
     url: SITE_URL,
     description:
-      "SiteVista provides manually prepared SEO audits and practical search optimization resources for businesses, marketers, and website owners.",
+      "SEO Audit Pro provides manually prepared SEO audits and practical search optimization resources for businesses, marketers, and website owners.",
     sameAs: [] as string[],
   };
 
