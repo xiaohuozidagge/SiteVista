@@ -47,6 +47,7 @@ export const caseFrontmatterSchema = z.object({
   featured: z.boolean().default(false),
   draft: z.boolean().default(false),
   noIndex: z.boolean().default(false),
+  canonical: z.string().optional(),
   caseDisclosure: z.string().optional(),
   keyFindings: z
     .array(
