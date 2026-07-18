@@ -59,3 +59,10 @@ export interface CaseCardData {
   featured: boolean;
   readingTime: number;
 }
+
+// ─── Table of Contents ───────────────────────────────────────
+export interface TocItem {
+  id: string;
+  text: string;
+  level: 2 | 3;
+}
