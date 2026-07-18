@@ -23,25 +23,17 @@ export function getAllCases(): AuditCase[] {
     const data = parsed.data;
     if (data.draft) continue;
 
-    // Normalize field aliases
-    const normalized = {
-      ...data,
-      publishedAt: data.publishedAt || data.date || "",
-      updatedAt: data.updatedAt || data.updated || "",
-      caseDisclosure: data.caseDisclosure || data.disclosure || "",
-    };
-
     cases.push({
       slug: data.slug,
-      frontmatter: normalized,
+      frontmatter: data,
       content,
     });
   }
 
   return cases.sort(
     (a, b) =>
-      new Date(b.frontmatter.publishedAt || "").getTime() -
-      new Date(a.frontmatter.publishedAt || "").getTime()
+      new Date(b.frontmatter.publishedAt).getTime() -
+      new Date(a.frontmatter.publishedAt).getTime()
   );
 }
 
@@ -70,7 +62,7 @@ export function toCaseCardData(c: AuditCase): CaseCardData {
     industry: c.frontmatter.industry,
     websiteType: c.frontmatter.websiteType,
     auditDate: c.frontmatter.auditDate,
-    publishedAt: c.frontmatter.publishedAt || "",
+    publishedAt: c.frontmatter.publishedAt,
     featuredImage: c.frontmatter.featuredImage,
     featuredImageAlt: c.frontmatter.featuredImageAlt,
     coverImage: c.frontmatter.coverImage,

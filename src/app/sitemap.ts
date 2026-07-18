@@ -26,13 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const dynamicRoutes: MetadataRoute.Sitemap = [
     ...posts.map((p) => ({
       url: `${SITE_URL}/blog/${p.slug}/`,
-      lastModified: new Date(p.frontmatter.updatedAt || p.frontmatter.publishedAt || ""),
+      lastModified: p.frontmatter.updatedAt ? new Date(p.frontmatter.updatedAt) : new Date(p.frontmatter.publishedAt),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
     ...cases.map((c) => ({
       url: `${SITE_URL}/seo-audit-cases/${c.slug}/`,
-      lastModified: new Date(c.frontmatter.updatedAt || c.frontmatter.publishedAt || c.frontmatter.date || ""),
+      lastModified: c.frontmatter.updatedAt ? new Date(c.frontmatter.updatedAt) : new Date(c.frontmatter.publishedAt),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),

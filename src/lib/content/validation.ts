@@ -39,10 +39,8 @@ export const caseFrontmatterSchema = z.object({
   industry: z.string().optional(),
   websiteType: z.string().optional(),
   auditDate: dateStringSchema.optional(),
-  publishedAt: dateStringSchema.optional(),
-  date: dateStringSchema.optional(),
+  publishedAt: dateStringSchema,
   updatedAt: z.string().optional(),
-  updated: z.string().optional(),
   author: z.string().optional(),
   featuredImage: z.string().optional(),
   featuredImageAlt: z.string().optional(),
@@ -53,11 +51,6 @@ export const caseFrontmatterSchema = z.object({
   noIndex: z.boolean().default(false),
   canonical: z.string().optional(),
   caseDisclosure: z.string().optional(),
-  disclosure: z.string().optional(),
-  primaryKeyword: z.string().optional(),
-  secondaryKeywords: z.array(z.string()).optional(),
-  status: z.string().optional(),
-  readingTime: z.string().optional(),
   keyFindings: z
     .array(
       z.object({
