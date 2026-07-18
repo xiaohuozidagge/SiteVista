@@ -65,6 +65,8 @@ export function toCaseCardData(c: AuditCase): CaseCardData {
     publishedAt: c.frontmatter.publishedAt,
     featuredImage: c.frontmatter.featuredImage,
     featuredImageAlt: c.frontmatter.featuredImageAlt,
+    coverImage: c.frontmatter.coverImage,
+    coverImageAlt: c.frontmatter.coverImageAlt,
     featured: c.frontmatter.featured,
     readingTime: 1,
   };

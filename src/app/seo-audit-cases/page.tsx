@@ -27,8 +27,8 @@ export default function CasesListPage() {
           <Link href={`/seo-audit-cases/${featuredCase.slug}/`} className="group block border border-[var(--color-border)] rounded-xl overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
             <div className="grid lg:grid-cols-2 gap-6 items-center">
               <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
-                {featuredCase.frontmatter.featuredImage ? (
-                  <img src={featuredCase.frontmatter.featuredImage} alt={featuredCase.frontmatter.featuredImageAlt || featuredCase.frontmatter.title} className="w-full h-full object-cover" />
+                {featuredCase.frontmatter.coverImage || featuredCase.frontmatter.featuredImage ? (
+                  <img src={featuredCase.frontmatter.coverImage || featuredCase.frontmatter.featuredImage} alt={featuredCase.frontmatter.coverImageAlt || featuredCase.frontmatter.featuredImageAlt || featuredCase.frontmatter.title} className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-[var(--color-text-muted)] text-sm">Featured Image</span>
                 )}
@@ -50,7 +50,7 @@ export default function CasesListPage() {
             {cases.map((c) => (
               <Link key={c.slug} href={`/seo-audit-cases/${c.slug}/`} className="group block border border-[var(--color-border)] rounded-lg overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
                 <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
-                  {c.featuredImage ? <img src={c.featuredImage} alt={c.featuredImageAlt || c.title} className="w-full h-full object-cover" loading="lazy" /> : <span className="text-[var(--color-text-muted)] text-sm">Case Image</span>}
+                  {c.coverImage || c.featuredImage ? <img src={c.coverImage || c.featuredImage} alt={c.coverImageAlt || c.featuredImageAlt || c.title} className="w-full h-full object-cover" loading="lazy" /> : <span className="text-[var(--color-text-muted)] text-sm">Case Image</span>}
                 </div>
                 <div className="p-5">
                   {c.industry && <span className="text-xs font-semibold uppercase text-[var(--color-accent)]">{c.industry}</span>}

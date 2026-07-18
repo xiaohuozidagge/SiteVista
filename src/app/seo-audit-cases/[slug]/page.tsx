@@ -43,8 +43,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: c.frontmatter.title,
       description: c.frontmatter.description,
-      images: c.frontmatter.featuredImage
-        ? [{ url: c.frontmatter.featuredImage }]
+      images: c.frontmatter.coverImage
+        ? [{ url: c.frontmatter.coverImage, alt: c.frontmatter.coverImageAlt }]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: c.frontmatter.title,
+      description: c.frontmatter.description,
+      images: c.frontmatter.coverImage
+        ? [c.frontmatter.coverImage]
         : [],
     },
   };
@@ -338,10 +346,10 @@ export default async function CaseDetailPage({ params }: Props) {
                   className="group block border border-[var(--color-border)] rounded-lg overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow"
                 >
                   <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
-                    {rc.featuredImage ? (
+                    {rc.coverImage || rc.featuredImage ? (
                       <img
-                        src={rc.featuredImage}
-                        alt={rc.featuredImageAlt || rc.title}
+                        src={rc.coverImage || rc.featuredImage}
+                        alt={rc.coverImageAlt || rc.featuredImageAlt || rc.title}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />

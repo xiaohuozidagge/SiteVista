@@ -54,6 +54,8 @@ export interface CaseCardData {
   publishedAt: string;
   featuredImage?: string;
   featuredImageAlt?: string;
+  coverImage?: string;
+  coverImageAlt?: string;
   featured: boolean;
   readingTime: number;
 }

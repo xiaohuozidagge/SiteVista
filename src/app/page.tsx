@@ -62,8 +62,8 @@ export default function HomePage() {
             <Link href={`/seo-audit-cases/${featuredCase.slug}/`} className="group block">
               <article className="grid lg:grid-cols-2 gap-8 items-center border border-[var(--color-border)] rounded-xl overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
                 <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
-                  {featuredCase.frontmatter.featuredImage ? (
-                    <img src={featuredCase.frontmatter.featuredImage} alt={featuredCase.frontmatter.featuredImageAlt || featuredCase.frontmatter.title} className="w-full h-full object-cover" />
+                  {featuredCase.frontmatter.coverImage || featuredCase.frontmatter.featuredImage ? (
+                    <img src={featuredCase.frontmatter.coverImage || featuredCase.frontmatter.featuredImage} alt={featuredCase.frontmatter.coverImageAlt || featuredCase.frontmatter.featuredImageAlt || featuredCase.frontmatter.title} className="w-full h-full object-cover" />
                   ) : (
                     <span className="text-[var(--color-text-muted)] text-sm">Featured Image</span>
                   )}
@@ -191,8 +191,8 @@ function CaseCard({ caseItem }: { caseItem: CaseCardData }) {
   return (
     <Link href={`/seo-audit-cases/${caseItem.slug}/`} className="group block border border-[var(--color-border)] rounded-lg overflow-hidden hover:shadow-[var(--shadow-card-hover)] transition-shadow">
       <div className="aspect-video bg-[var(--color-bg-secondary)] flex items-center justify-center">
-        {caseItem.featuredImage ? (
-          <img src={caseItem.featuredImage} alt={caseItem.featuredImageAlt || caseItem.title} className="w-full h-full object-cover" loading="lazy" />
+        {caseItem.coverImage || caseItem.featuredImage ? (
+          <img src={caseItem.coverImage || caseItem.featuredImage} alt={caseItem.coverImageAlt || caseItem.featuredImageAlt || caseItem.title} className="w-full h-full object-cover" loading="lazy" />
         ) : (
           <span className="text-[var(--color-text-muted)] text-sm">Case Image</span>
         )}

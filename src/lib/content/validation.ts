@@ -44,6 +44,8 @@ export const caseFrontmatterSchema = z.object({
   author: z.string().optional(),
   featuredImage: z.string().optional(),
   featuredImageAlt: z.string().optional(),
+  coverImage: z.string().optional(),
+  coverImageAlt: z.string().optional(),
   featured: z.boolean().default(false),
   draft: z.boolean().default(false),
   noIndex: z.boolean().default(false),
