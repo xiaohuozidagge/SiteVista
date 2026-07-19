@@ -1,0 +1,607 @@
+---
+title: "Han's Laser SEO Audit: Technical SEO, Content and GEO"
+description: "An independent Han's Laser SEO audit covering indexability, international SEO, content quality, structured data, performance and GEO readiness."
+slug: "hanslaser-seo-audit"
+coverImage: "/images/cases/hanslaser-seo-audit/hanslaser-seo-audit-scorecard.webp"
+coverImageAlt: "Han's Laser SEO audit scorecard showing Technical SEO 37, Content and E-E-A-T 38, and GEO Readiness 50"
+industry: "Industrial Laser Manufacturing"
+websiteType: "Global Enterprise Website"
+auditDate: "2026-07-19"
+publishedAt: "2026-07-19"
+updatedAt: "2026-07-19"
+author: "seoauditpro"
+featured: true
+draft: false
+noIndex: false
+canonical: "https://seoauditpro.cloud/seo-audit-cases/hanslaser-seo-audit/"
+featuredImage: ""
+featuredImageAlt: ""
+metrics:
+  - label: "Technical SEO"
+    value: "37/100"
+    direction: "neutral"
+    sentiment: "negative"
+  - label: "Content & E-E-A-T"
+    value: "38/100"
+    direction: "neutral"
+    sentiment: "negative"
+  - label: "GEO Readiness"
+    value: "50/100"
+    direction: "neutral"
+    sentiment: "neutral"
+  - label: "Indexability"
+    value: "2/10"
+    direction: "neutral"
+    sentiment: "negative"
+  - label: "Structured Data"
+    value: "0/10"
+    direction: "neutral"
+    sentiment: "negative"
+  - label: "Rendering"
+    value: "8/10"
+    direction: "neutral"
+    sentiment: "positive"
+keyFindings:
+  - type: "keyFinding"
+    heading: "Server-rendered content provides a solid crawlability foundation"
+    content: "The sampled pages delivered core content in the initial HTML with limited dependence on client-side JavaScript."
+  - type: "criticalIssue"
+    heading: "Indexation controls need immediate attention"
+    content: "Canonical tags were not detected, non-existent URLs returned HTTP 200, and the www and non-www hosts served duplicate content in the audited sample."
+  - type: "recommendation"
+    heading: "Fix foundations before scaling content"
+    content: "Correct canonicals, HTTP error handling, host consolidation, titles and international mappings before expanding content or launching programmatic SEO pages."
+relatedCases: []
+faq:
+  - question: "Is this an official Han's Laser SEO audit?"
+    answer: "No. This is an independent analysis based on publicly accessible pages, HTTP responses and other publicly observable technical signals."
+  - question: "Does a 37/100 technical score come from Google?"
+    answer: "No. It is a diagnostic score from the audit framework, not a Google metric or a prediction of rankings, traffic or revenue."
+  - question: "What is the most urgent SEO issue on hanslaser.com?"
+    answer: "The highest-priority theme is indexation control: canonical tags were not detected, missing URLs returned soft-404 responses, and preferred-host consolidation was incomplete in the tested sample."
+  - question: "Should Han's Laser launch programmatic SEO pages now?"
+    answer: "Not yet. The current canonical, error-response, URL, title and content-template issues should be fixed before adding a large number of templated pages."
+caseDisclosure: "This independent SEO analysis is based exclusively on publicly available information. SEO Audit Pro is not affiliated with, endorsed by, or commissioned by Han's Laser. The findings reflect a limited sample observed on or around July 19, 2026 and may not represent the company's internal SEO strategy, private analytics, current crawler rules, or complete technical environment."
+---
+
+{/* The case template renders the frontmatter title as the only H1. */}
+
+## Executive summary
+
+Han's Laser has a server-rendered enterprise website and substantial real-world brand authority, but the public SEO implementation does not communicate that authority consistently. The audit found significant weaknesses in canonicalization, HTTP error handling, host consolidation, international targeting, structured data, page titles, performance and content depth.
+
+The most urgent concern is indexation control. Canonical tags were not detected on the sampled pages, the HTTPS www and non-www hosts both served content, and non-existent URLs returned HTTP 200 with an error page. These signals can make it harder for search engines to distinguish canonical pages from duplicates and soft 404s.
+
+International SEO is another major opportunity. The audited ecosystem included Chinese, English and regional domains, but no cross-domain hreflang connection was detected. Meanwhile, the `/en/` path on the `.com` domain returned a 404-style page with HTTP 200.
+
+Content and GEO analysis reached a related conclusion: Han's Laser appears to possess genuine manufacturing and R&D expertise, but the audited product pages and company explanations do not present that expertise in sufficiently clear, self-contained formats.
+
+![Han's Laser SEO audit scorecard showing Technical SEO 37, Content and E-E-A-T 38, and GEO Readiness 50](/images/cases/hanslaser-seo-audit/hanslaser-seo-audit-scorecard.webp)
+
+### Audit scorecard
+
+| Audit area | Score | Primary constraint |
+|---|---:|---|
+| Technical SEO | 37/100 | Canonicals, soft 404s, duplicate hosts and performance |
+| Content and E-E-A-T | 38/100 | Thin product copy and limited expert or case-study evidence |
+| GEO readiness | 50/100 | Missing structured data and weak first-party citability |
+| Overall risk | High | Foundational issues should be fixed before scaling content |
+
+#### How to interpret these scores
+
+These are diagnostic scores created for prioritization. They are not Google metrics and should not be interpreted as forecasts of rankings, organic traffic or revenue. The findings should be checked against Google Search Console, analytics, server logs and a complete crawl before implementation decisions are finalized.
+
+## Audit scope and methodology
+
+The audit reviewed publicly available HTML, HTTP responses, robots.txt, XML sitemap behavior, representative product and corporate pages, language-domain relationships, metadata, security headers, resource counts and visible content.
+
+| Audit detail | Observation |
+|---|---|
+| Primary domain | `https://www.hanslaser.com/` |
+| Audit date | July 19, 2026 |
+| CMS and delivery | ThinkPHP, nginx and server-rendered HTML |
+| Sitemap sample | 619 URLs |
+| Primary language | Chinese; English content observed on `hanslaser.net` |
+| Website type | Global B2B industrial manufacturing portal |
+| Private data | Search Console, analytics, logs and CMS configuration were unavailable |
+
+### Evidence labels used in this case
+
+| Label | Meaning |
+|---|---|
+| Confirmed in sample | Directly observed in a tested response or rendered source |
+| Sample-based | Observed on representative pages; other templates may differ |
+| Estimate | Directional calculation requiring field or first-party validation |
+| Recommendation | A proposed improvement, not evidence of current implementation |
+
+Some figures in the source audit, including company statistics, estimated LCP, AI-citation correlations and projected score improvements, require independent verification before external reuse.
+
+## Five critical SEO findings
+
+### 1. Crawler and WAF behavior needs validation
+
+A generic command-line request returned HTTP 403, while a browser-like user agent returned HTTP 200. The source audit reported that a Googlebot user agent passed the test.
+
+```text
+Generic curl request → 403 Forbidden
+Browser-like user agent → 200 OK
+```
+
+This pattern may block rank trackers, SEO tools and smaller search crawlers. It does not prove that Googlebot is currently unable to crawl the site, and user-agent spoofing alone cannot confirm how a genuine verified crawler is treated.
+
+#### Recommended action
+
+Audit 403 responses by user agent and IP in server logs, review nginx and WAF rules, and verify genuine search crawlers securely. Avoid a blanket rule that permits only browser-identifying user agents.
+
+##### Validation check
+
+Test intended crawlers from verified networks and monitor response codes over time. Do not rely solely on manually changing the user-agent string.
+
+### 2. Canonical tags were not detected
+
+No canonical element was found on the sampled homepage and product pages. This becomes more important because alternate host and URL formats were also accessible.
+
+Without canonical tags, search engines must infer the preferred URL from redirects, internal links, sitemaps and other signals. This does not guarantee duplication, but it increases ambiguity.
+
+#### Recommended action
+
+Generate one absolute, self-referencing canonical for every indexable template. The canonical should match the preferred HTTPS host, URL format and language version.
+
+### 3. Missing pages returned soft 404 responses
+
+The following behavior was observed in the source audit:
+
+```text
+/nonexistent-page-12345.html → 200 OK with error content
+/en/ → 200 OK with a 404-style title/body
+/sitemap.xml.gz → 200 OK with an HTML error page
+```
+
+Returning HTTP 200 for missing content can waste crawl activity, create low-value indexed URLs and make monitoring less reliable.
+
+#### Recommended action
+
+Configure the ThinkPHP error handler and nginx routing so missing content returns a genuine HTTP 404 or 410. Remove invalid sitemap endpoints or serve the correct XML response.
+
+### 4. International domains lacked hreflang connections
+
+No cross-domain hreflang annotations were detected across the reviewed properties. The source audit referenced domains and subdomains including:
+
+- `hanslaser.com`
+- `hanslaser.net`
+- `hanslaser.tw`
+- `hanslaser.co.kr`
+- `jp.hanslaser.net`
+- `de.hanslaser.net`
+
+The absence of hreflang does not make the sites uncrawlable, but it removes an explicit signal that equivalent language or regional pages belong to the same international cluster.
+
+#### Recommended action
+
+Inventory every indexable language and region page, identify genuine equivalents and create reciprocal cross-domain hreflang clusters. Each alternate should return HTTP 200, reference the intended canonical and use a supported language-region code.
+
+### 5. The viewport restricted browser zoom
+
+The audited page returned a viewport configuration that included `user-scalable=no` and fixed maximum and minimum scale values:
+
+```html
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+```
+
+Restricting pinch-to-zoom creates an accessibility problem for visitors who need magnification. This case treats it as an accessibility and usability risk rather than proof of a direct ranking penalty.
+
+#### Recommended action
+
+Use a zoom-friendly baseline and test navigation, forms and overlays at increased magnification:
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+## Technical SEO assessment
+
+### Technical score breakdown
+
+| Category | Score | Audit observation |
+|---|---:|---|
+| Crawlability | 5/10 | WAF behavior and sitemap-quality concerns |
+| Indexability | 2/10 | Canonicals not detected and soft 404 responses |
+| Security | 5/10 | HSTS observed; several defensive headers not detected |
+| URL structure | 4/10 | Mixed formats, underscores, apparent typos and duplicates |
+| Mobile optimization | 5/10 | Zoom restricted by viewport settings |
+| Core Web Vitals readiness | 3/10 | Heavy image footprint and blocking resources |
+| Structured data | 0/10 | No supported markup detected in the sample |
+| Rendering | 8/10 | Core content was delivered in server-rendered HTML |
+| International SEO | 3/10 | Fragmented domains and no observed hreflang mapping |
+
+### Redirects and host consolidation
+
+| Request | Observed response | Assessment |
+|---|---|---|
+| `http://www.hanslaser.com/` | 301 to HTTPS www | Pass |
+| `http://hanslaser.com/` | 301 to HTTPS non-www, then 200 | Does not consolidate to www |
+| `https://hanslaser.com/` | 200 with duplicate content | High duplicate risk |
+| Non-existent HTTPS path | 200 with error content | Soft 404 |
+
+If `www.hanslaser.com` is the preferred host, all non-www variants should redirect once to the matching HTTPS www URL. Internal links, sitemaps, canonicals and hreflang URLs should use the same host consistently.
+
+### URL consistency
+
+The audit identified pages accessible with and without `.html`, as well as underscores and apparent spelling errors such as `pro-3d5acuting.html`.
+
+Select one canonical URL convention, document it and enforce it in the CMS. Map legacy URLs one-to-one with permanent redirects, then update internal links and sitemap entries. Avoid a large migration unless redirect coverage and analytics monitoring are ready.
+
+### Sitemap quality
+
+All 619 listed URLs reportedly used `priority=1.0`, with `changefreq` values of `hourly` or `always`. The source audit also found 109 URLs sharing the same `lastmod` value of June 3, 2024.
+
+| Sitemap issue | Priority | Recommended treatment |
+|---|---|---|
+| Uniform priority | Low | Remove or retain only for non-Google consumers |
+| Unrealistic change frequency | Low | Remove unless a downstream system uses it |
+| Shared or stale lastmod | Medium | Generate from meaningful content changes |
+| Invalid `.gz` endpoint | Medium | Serve valid compressed XML or remove it |
+| Soft-404 URLs | High | Exclude missing and non-indexable URLs |
+
+Google may ignore `priority` and `changefreq`, so accurate URL inclusion and meaningful `lastmod` values deserve more attention than artificial priority tiers.
+
+### Security headers
+
+HSTS was present in the sampled response. The source audit did not detect the following headers:
+
+- `Content-Security-Policy`
+- `X-Content-Type-Options`
+- `X-Frame-Options`
+- `Referrer-Policy`
+- `Permissions-Policy`
+
+Header coverage should be confirmed across hosts and templates. Policies such as CSP should be introduced carefully because overly restrictive rules can break tracking, forms, embedded media or other functionality.
+
+### Additional technical findings
+
+| Priority | Finding | Recommended action |
+|---|---|---|
+| High | Korean domain referenced over HTTP | Enable HTTPS and update all links |
+| Medium | Conflicting favicon declarations | Keep one current favicon declaration |
+| Medium | `/en/` returns a 404 body with HTTP 200 | Serve English content or redirect to the intended English site |
+| Medium | `sitemap.xml.gz` returns HTML | Serve valid XML gzip or remove the route/reference |
+| Low | Duplicate `telephone=no` and `adress=no` typo | Clean the format-detection metadata |
+| Low | Legacy renderer metadata | Remove if it no longer supports a required browser |
+| Low | Large inline CSS block | Move stable CSS into cacheable stylesheets where appropriate |
+
+## On-page SEO and metadata
+
+### Homepage and product title problems
+
+The homepage title contained only whitespace in the audited response. A sampled product page repeated the same keyword phrase before appending the brand:
+
+```html
+<title>激光打标机_激光打标设备_激光打标设备厂家-大族激光 - 激光打标机_激光打标设备_激光打标设备厂家-大族激光 - 大族激光官网</title>
+```
+
+An empty homepage title removes a fundamental relevance and snippet signal. Repeated product titles are difficult to read and may be truncated in search results.
+
+| Element | Observed issue | Recommended pattern |
+|---|---|---|
+| Homepage title | Empty or whitespace | Brand plus primary company value proposition |
+| Product title | Repeated keyword phrase | Unique page topic plus brand once |
+| Canonical | Not detected | Absolute self-referencing preferred URL |
+| Meta keywords | Present | Remove because Google does not use it |
+| News dates | Not clearly visible | Expose publication and modified dates |
+
+Example homepage direction:
+
+```text
+大族激光 - 智能制造与工业激光设备解决方案
+```
+
+Final wording should be based on actual keyword data, brand guidance and the visible homepage value proposition.
+
+### Internal linking footprint
+
+The homepage contained approximately 406 anchor elements, including about 392 conventional `href` links. A high link count is not automatically harmful, but repeated global navigation and footer links can reduce clarity for users.
+
+Product pages should link to relevant industry applications, solution pages should link back to suitable equipment, and technical FAQs should connect informational questions with product, service and contact resources.
+
+## Performance and resource delivery
+
+### Homepage resource snapshot
+
+| Resource | Observed count | Comment |
+|---|---:|---|
+| Images | 195 | No native `loading="lazy"` observed |
+| Anchor elements | 406 | Large navigation and footer footprint |
+| Valid href links | 392 | Excludes JavaScript, anchors, telephone and email links |
+| External links | Approximately 45 | Subsidiary, social and regulatory destinations |
+| CSS files | 5 | Appeared render-blocking in the document head |
+| Script tags | 14 | Included synchronously loaded Bing UET |
+| HTML size | Approximately 204 KB | Substantial template and navigation payload |
+
+The source audit estimated an LCP range of 4–8 seconds on slow 3G and 2.5–4.5 seconds on 4G. These are directional estimates, not measured field results. The actual LCP element and performance distribution should be confirmed using CrUX, PageSpeed Insights and real-user monitoring.
+
+### Performance priorities
+
+1. Identify the actual LCP element before changing its loading behavior.
+2. Do not lazy-load the confirmed LCP image.
+3. Add native lazy loading to below-the-fold images.
+4. Generate appropriate `srcset` and `sizes` values.
+5. Load Bing UET asynchronously and review all third-party tags.
+6. Reduce or defer non-critical CSS using measured coverage.
+7. Reduce repeated markup and DOM depth where it does not support content or interaction.
+
+## International SEO analysis
+
+The site operates through a fragmented collection of domains and subdomains. The Chinese `.com` site and English `.net` site were not explicitly connected in the reviewed HTML.
+
+| Property | Role noted in the source audit | Main issue |
+|---|---|---|
+| `hanslaser.com` | Chinese corporate site | Broken `/en/` route and no detected hreflang |
+| `hanslaser.net` | English website | Not explicitly connected to the `.com` entity |
+| `hanslaser.tw` | Regional website | No detected alternate mapping |
+| `hanslaser.co.kr` | Korean website | HTTP link reported; HTTPS required |
+| `jp.hanslaser.net` | Japanese subdomain | No detected alternate mapping |
+| `de.hanslaser.net` | German subdomain | No detected alternate mapping |
+
+### Hreflang implementation requirements
+
+- Inventory all indexable language and regional URLs.
+- Map only true page equivalents.
+- Use supported language-region codes.
+- Include self-references and reciprocal alternates.
+- Ensure each alternate returns HTTP 200.
+- Align hreflang URLs with each page's canonical.
+- Use `x-default` only for a genuine selector or global fallback.
+- Validate representative clusters after each CMS release.
+
+The website should not generate hreflang mechanically across pages that are not equivalent. Incorrect clusters can be less useful than a smaller, accurate implementation.
+
+## Structured data opportunities
+
+No JSON-LD, microdata or RDFa was detected in the audited sample. This is a significant opportunity because the company operates across multiple domains and has a public corporate entity that should be described consistently.
+
+| Page template | Recommended markup | Purpose |
+|---|---|---|
+| Homepage/global framework | `Organization` and `WebSite` | Clarify entity identity and publisher relationships |
+| Hierarchical pages | `BreadcrumbList` | Describe the visible navigation hierarchy |
+| Qualifying product pages | `Product` | Describe actual products and supported commercial data |
+| News and technical articles | `Article` or `NewsArticle` | Expose headline, dates, author and publisher |
+| Question pages | Markup matching the visible page type | Avoid adding schema solely to pursue a rich result |
+
+### Implementation safeguards
+
+- Use one stable Organization `@id` across templates and languages.
+- Use a current official logo URL and canonical corporate URL.
+- Include only verified official profiles in `sameAs`.
+- Match structured data to visible page content.
+- Validate rendered HTML, not only the CMS template.
+- Verify employee, revenue, R&D and IP figures before placing them in markup.
+- Do not assume that valid schema guarantees a rich result.
+
+## Content quality and E-E-A-T
+
+### Score breakdown
+
+| Dimension | Score | Primary observation |
+|---|---:|---|
+| Content depth | 35/100 | Product categories often function as navigation labels |
+| Readability | 40/100 | Chinese content is functional; international access is fragmented |
+| Experience | 25/100 | Few prominent cases or first-hand implementation narratives |
+| Expertise | 40/100 | R&D signals exist, but technical depth and named experts are limited |
+| Authoritativeness | 35/100 | External entity signals exist; owned domains are fragmented |
+| Trustworthiness | 45/100 | Corporate and contact signals exist; source attribution can improve |
+| Content freshness | 30/100 | Stale sitemap dates and limited visible publication dates |
+| Content structure | 50/100 | Navigation is clear; answer-oriented sections are limited |
+
+### Key content gaps
+
+#### No unified company explanation
+
+The audited homepage presented company statistics across visual elements but did not provide one concise, self-contained explanation of what Han's Laser is, what it manufactures and which industries it serves.
+
+Add a dated, factual overview connected to deeper company, R&D, product and investor information. Any financial, employee or intellectual-property figures should include the reporting period and an official source.
+
+#### Thin product-category descriptions
+
+Sampled product-category and subcategory descriptions ranged from approximately 25 to 150 Chinese characters. Many pages functioned more like navigation directories than technical resources.
+
+There is no universal 134–167-word requirement for Google or AI citation. The useful principle is to provide a complete, self-contained explanation with enough verified detail to answer the user's question.
+
+#### Limited expert attribution
+
+No named engineer, technical author or reviewer was observed in the sampled content. Where corporate governance permits, technical resources can name qualified authors or reviewers and link to accurate professional profiles.
+
+#### Limited first-hand evidence
+
+Customer outcomes, implementation stories and technical case studies were not prominent on the homepage sample. Real examples can demonstrate experience more effectively than generic claims, provided the company has permission to publish customer information.
+
+### Priority content set
+
+| Page | Current issue | Recommended content |
+|---|---|---|
+| Homepage | No unified company explanation | Concise overview, dated facts and authoritative links |
+| Laser marking | Thin category descriptions | Technology definition, applications, specs and selection guidance |
+| Laser cutting | Thin category descriptions | Materials, power ranges, processes and decision criteria |
+| Laser welding | Limited technical differentiation | Processes, materials, quality controls and owned capabilities |
+| Solutions hub | Mostly navigation cards | Industry problems, processes, equipment fit and evidence |
+| FAQ and support | Short answers | Clear technical answers linked to products and service resources |
+
+### Suggested content architecture
+
+1. Product category hub
+2. Technology explanation
+3. Product subcategories
+4. Material and industry applications
+5. Selection criteria
+6. Verified specifications
+7. Case evidence
+8. Relevant FAQs
+9. Product, service and contact links
+
+Question-based headings can help when they match genuine search intent, but they should not replace clear descriptive headings everywhere.
+
+## GEO and AI search readiness
+
+### GEO scorecard
+
+| Dimension | Score | Assessment |
+|---|---:|---|
+| Citability | 55/100 | Useful corporate facts exist, but extractable passages are limited |
+| Structural readability | 65/100 | SSR is positive; content structure can be clearer |
+| Multimodal content | 30/100 | Many images, but limited surfaced video and specification assets |
+| Authority and brand signals | 50/100 | External evidence exists; official domains are weakly connected |
+| Technical accessibility | 45/100 | Crawler governance and structured data need improvement |
+
+### Platform scores reported by the source framework
+
+| Platform | Diagnostic score | Reported constraint |
+|---|---:|---|
+| Google AI Overviews | 45/100 | Thin product copy and missing structured data |
+| ChatGPT | 40/100 | Heavy reliance on third-party entity information |
+| Perplexity | 55/100 | SSR supports retrieval, but product content limits citations |
+| Bing Copilot | 50/100 | Indexability exists, but explicit entity markup is weak |
+
+These platform values are audit-framework scores, not data supplied by the platforms. Claims about exact AI citation sources or fixed correlations require independent evidence.
+
+### AI crawler access
+
+The source audit reported that GPTBot, ClaudeBot, PerplexityBot and CCBot fell under the general `User-agent: *` rules. Crawler access should be treated as a legal, security, licensing and business-policy decision—not simply an SEO switch.
+
+Review actual server logs and current robots directives before changing access. Search crawlers and model-training crawlers may serve different purposes and should not automatically receive identical rules.
+
+### llms.txt assessment
+
+The source audit found no public `llms.txt` on the `.com` or `.net` domains. `llms.txt` is an emerging voluntary convention, not a confirmed Google ranking requirement or a substitute for crawlable content, structured data and authoritative references.
+
+### GEO priorities
+
+1. Publish accurate Organization and page-type structured data.
+2. Create concise first-party explanations of the company and core technologies.
+3. Add dated technical evidence, named experts and real implementation cases.
+4. Connect official domains and verified profiles to one entity consistently.
+5. Establish an intentional AI crawler policy.
+6. Surface useful video, specifications and technical documentation.
+
+## Programmatic SEO readiness
+
+The source analysis identified potential product-by-industry, laser-by-material, regional and technical-question templates. The opportunity may be valuable, but the current website should not scale these templates yet.
+
+### Blocking prerequisites
+
+| Requirement | Current audit finding | Required state |
+|---|---|---|
+| Canonical tags | Not detected | One correct canonical per indexable page |
+| HTTP errors | Soft 404 behavior | Real 404 or 410 responses |
+| URL convention | Mixed and typo-prone | Documented and enforced slug standard |
+| Title generation | Empty or duplicated | Unique, intent-aligned titles |
+| Content templates | Existing thin pages | Substantive and differentiated content |
+| Sitemap generation | Stale or unrealistic fields | Canonical URLs with accurate lastmod |
+
+### Potential templates after foundations are fixed
+
+| Template | Indicative volume | Quality requirement |
+|---|---:|---|
+| Product × industry | Up to 84 pages | Unique processes, models, evidence and industry outcomes |
+| Laser type × material | Up to 40 pages | Verified parameters, limitations and quality results |
+| Regional equipment pages | Lean 20-page pilot | Real local support, availability and certification data |
+| Technical question pages | Start near 30 pages | Original expert answers rather than templated filler |
+
+#### Quality gate
+
+Do not launch an estimated 174-page expansion until the blocking issues are resolved. Begin with a small manually reviewed pilot, then monitor indexation, duplication, impressions, engagement and lead quality before scaling.
+
+## Prioritized remediation plan
+
+### Immediate fixes
+
+| Action | Source estimate | Priority |
+|---|---:|---|
+| Add canonical tags to the global template | 15 minutes | Critical |
+| Return proper status codes for missing URLs | 20 minutes | Critical |
+| Remove viewport zoom restrictions | 5 minutes | Critical |
+| Redirect non-www to the preferred host | 5 minutes | High |
+| Fix the empty homepage title | 5 minutes | High |
+| Add basic frame and MIME protection headers | 10 minutes | High |
+
+The source audit estimated that this sprint could raise its diagnostic technical score from 37 to approximately 52. This is a directional framework estimate, not a forecast of search performance.
+
+### 30-day roadmap
+
+| Period | Primary work | Intended outcome |
+|---|---|---|
+| Week 1 | Canonicals, 404s, host redirect, titles, sitemap cleanup and basic headers | Indexation control |
+| Week 2 | International inventory, HTTPS, `/en/` routing and hreflang pilot | Language clarity |
+| Week 3 | URL cleanup, legacy redirects and internal-link updates | URL consolidation |
+| Week 4 | Image delivery, CSS/JS optimization and measured CWV work | Performance improvement |
+
+### 60–90-day priorities
+
+| Period | Primary work | Intended outcome |
+|---|---|---|
+| Days 31–60 | Core structured data, company overview and priority product content | Stronger entity and content depth |
+| Days 61–90 | Case studies, expert resources and a controlled template pilot | Authority and scalable growth |
+
+### Priority matrix
+
+| Priority | Workstream | Why it comes first |
+|---|---|---|
+| P0 | Canonicals and real 404s | Controls duplicate and low-value indexation |
+| P0 | Preferred host consolidation | Combines URL signals |
+| P0 | Title generation | Restores fundamental relevance and SERP messaging |
+| P1 | International mapping | Reduces language and domain ambiguity |
+| P1 | Core structured data | Clarifies entity and page relationships |
+| P1 | Core product content | Makes expertise discoverable |
+| P2 | Performance | Improves experience after field validation |
+| P3 | Programmatic expansion | Only after foundations and quality gates pass |
+
+## What Han's Laser gets right
+
+The audit also identified several foundations worth preserving:
+
+- Core content was present in the initial server-rendered HTML.
+- The site used HTTPS and exposed HSTS.
+- The existing navigation covers a wide product and solution portfolio.
+- Corporate contact information and lead-generation paths were visible.
+- The website has a substantial base of 619 sitemap URLs.
+- The brand has external corporate and entity signals beyond its own website.
+- The international domain footprint provides a foundation for stronger regional targeting.
+
+Remediation should preserve these strengths rather than introducing a full redesign solely for SEO.
+
+## Validation checklist
+
+### Technical checks
+
+- A missing URL returns a genuine 404 or 410.
+- Every indexable page renders one absolute canonical.
+- HTTP and non-preferred-host variants redirect once to the canonical HTTPS host.
+- The homepage and sampled sub-pages have unique, non-empty titles.
+- Sitemap files contain only canonical 200-status URLs.
+- Lastmod reflects meaningful content changes.
+- Hreflang clusters are reciprocal, canonical and return HTTP 200.
+- Structured data matches visible content and passes syntax validation.
+- Browser zoom remains available.
+
+### Measurement checks
+
+- Compare Search Console index coverage before and after release.
+- Monitor canonical selection and duplicate-page reporting.
+- Track impressions and CTR by language, template and query intent.
+- Use server logs to verify crawler response codes.
+- Measure field Core Web Vitals rather than relying only on source-based estimates.
+- Evaluate leads and assisted conversions, not only rankings.
+
+##### Minimum evidence for confirming improvement
+
+The fixes should be verified through a fresh crawl, rendered-HTML inspection, HTTP header tests, Search Console data and server logs. A change should not be considered complete simply because it was added to a CMS template.
+
+## Final assessment
+
+Han's Laser does not primarily have an authority problem; it has an implementation and communication problem. The public website is server-rendered and supported by a recognized industrial brand, but search engines receive inconsistent signals about canonical URLs, missing pages, language equivalents and corporate identity.
+
+The fastest path forward is foundational: repair HTTP status handling, add canonical tags, consolidate hosts, fix title templates and establish an accurate international mapping. Structured data and deeper first-party product content should follow. Performance work should be guided by field evidence, while programmatic expansion should remain on hold until the existing 619-page estate is under control.
+
+If these areas are addressed carefully, the website can move from a large navigation catalogue toward a more coherent source of industrial expertise, improving crawl efficiency, search relevance, international discoverability and AI-era citability.
+
+---
+
+*This independent SEO analysis is based exclusively on publicly available information. SEO Audit Pro is not affiliated with, endorsed by, or commissioned by Han's Laser. The findings reflect a limited sample observed on or around July 19, 2026 and may not represent the company's internal SEO strategy, private analytics, current crawler rules, or complete technical environment.*
