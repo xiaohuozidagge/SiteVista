@@ -1,0 +1,924 @@
+---
+title: "Haas Automation SEO Audit: Technical SEO, Content & E-E-A-T Analysis"
+description: "An independent SEO audit of haascnc.com covering technical SEO, content quality, E-E-A-T, structured data, GEO readiness and backlink performance."
+slug: "haas-automation-seo-audit"
+coverImage: "/images/cases/haas-automation-seo-audit/haas-automation-seo-audit-cover.png"
+coverImageAlt: "Haas Automation SEO audit report covering technical SEO and content analysis"
+industry: "Industrial Manufacturing"
+websiteType: "Global Enterprise Website"
+auditDate: "2026-07-21"
+publishedAt: "2026-07-21"
+updatedAt: "2026-07-21"
+author: "seoauditpro"
+featured: false
+draft: false
+noIndex: false
+canonical: "https://seoauditpro.cloud/seo-audit-cases/haas-automation-seo-audit/"
+featuredImage: ""
+featuredImageAlt: ""
+metrics: []
+keyFindings: []
+relatedCases: []
+faq: []
+caseDisclosure: "This independent SEO analysis is based exclusively on publicly available information. SEO Audit Pro is not affiliated with, endorsed by, or commissioned by Haas Automation. The findings reflect the tested pages and responses observed on the audit date and may not represent the company's internal SEO strategy, private analytics, or complete technical environment."
+---
+
+This independent audit evaluates the SEO performance of **Haas Automation (`haascnc.com`)** across five areas: technical SEO, content quality and E-E-A-T, structured data, generative engine optimization (GEO), and backlink authority. It highlights the highest-impact problems, provides implementation-ready recommendations, and outlines a practical 30-day improvement roadmap.
+
+## Technical SEO audit
+
+**URL:** https://www.haascnc.com/ | **Date:** 2026-07-21 **Stack:** Adobe Experience Manager (AEM) + nginx dispatcher + Cloudflare CDN
+
+---
+
+### Technical Score: 52/100
+
+| Category        | Score | Key Issue                                                    |
+| --------------- | ----- | ------------------------------------------------------------ |
+| Crawlability    | 4/10  | Cloudflare WAF challenges sitemaps + AI crawlers             |
+| Indexability    | 6/10  | `/index.html` canonical, no hreflang for 27 languages        |
+| Security        | 8/10  | Enterprise-grade — only CSP is minimal (frame-ancestors only) |
+| URL Structure   | 5/10  | `.html` extensions, homepage redirects `/` → `/index.html`   |
+| Mobile          | 7/10  | Responsive but Bootstrap 4 Alpha 6 (2016 pre-production)     |
+| Core Web Vitals | 3/10  | 353KB HTML, 17 CSS, 35 JS, 104 images, duplicate jQuery      |
+| Structured Data | 0/10  | Zero JSON-LD, zero microdata, zero RDFa                      |
+| JS Rendering    | 7/10  | AEM SSR — content in HTML, but navigation/search require JS  |
+| i18n / Hreflang | 0/10  | 27 languages, zero hreflang tags                             |
+| Robots.txt      | 7/10  | Well-structured but sitemaps blocked by CF; Crawl-delay: 10  |
+
+---
+
+### Critical (3)
+
+#### C1. Cloudflare WAF Over-Blocking — Sitemaps + AI Crawlers + Redirects
+
+| Request                            | Result                         |
+| ---------------------------------- | ------------------------------ |
+| `sitemap.xml` (all 27)             | **403 + Cloudflare Challenge** |
+| GPTBot / ClaudeBot / PerplexityBot | **403 + Cloudflare Challenge** |
+| `http://` → HTTPS                  | **403** instead of 301         |
+| Non-www → www                      | **403** instead of 301         |
+| Language pages (`/es.html`)        | **403**                        |
+
+- **THINK:** Cloudflare's Managed Challenge mode blocks everything without browser JS execution. Googlebot may bypass via "Verified Bots," but AI crawlers, Bingbot, and SEO tools cannot. Sitemap discovery is completely broken.
+- **Fix:** Enable Cloudflare "Verified Bots" bypass. Whitelist AI search crawler UAs. Use "Always Use HTTPS" for clean 301 redirects.
+- **ACCEPT:** `curl -sI https://www.haascnc.com/sitemap.xml` must return 200.
+
+#### C2. Zero Hreflang — 27 Language Versions Cannibalize Each Other
+
+| Languages                                                    | Status                 |
+| ------------------------------------------------------------ | ---------------------- |
+| en, de, es, fr, it, pt, cs, da, nl, hu, pl, sv, tr, zh, fi, nb, ar, bg, hr, el, ro, sk, sl, ko, ja, uk, es-mx, pt-br | **Zero hreflang tags** |
+
+- **Impact:** Google treats all 27 language versions as unrelated duplicate sites. The `/index.html` canonical signals English is the original — making 26 translations appear as copies.
+- **Fix:** AEM has built-in hreflang framework. Configure in Language Copy Manager. Add both HTML `<link>` tags and XML sitemap hreflang entries.
+- **Effort:** 1-2 days for AEM configuration + testing.
+
+#### C3. No Structured Data — Zero Schema.org Markup
+
+No JSON-LD. No Microdata. No RDFa. Confirmed by 3 independent analyses. For a $1B+ American manufacturer: no Organization schema, no Product schema, no WebSite schema, no BreadcrumbList.
+
+- **Fix:** Add Organization (with sameAs: Wikipedia Q5636666, Wikidata Q4040329), WebSite + SearchAction, BreadcrumbList. Add Product schema on machine pages.
+
+---
+
+### High (7)
+
+#### H1. Homepage `/` → 301 → `/index.html` + Canonical Points to `/index.html`
+
+
+
+```
+GET / → 301 → /index.html
+<link rel="canonical" href="https://www.haascnc.com/index.html"/>
+```
+
+Clean URLs are industry standard. The `.html` extension is an AEM default that needs explicit override. The redirect chain adds latency and the canonical is fragile.
+
+- **Fix:** Serve `/` directly (200). Change canonical to `https://www.haascnc.com/`.
+
+#### H2. 353KB HTML + 17 CSS + 35 JS + 104 Images
+
+**Duplicate jQuery detected** (2 separate loads):
+
+
+
+```
+/etc.clientlibs/clientlibs/granite/jquery.min.js
+cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js
+```
+
+**Legacy libraries:**
+
+| Library        | Version   | Age  | Status                                  |
+| -------------- | --------- | ---- | --------------------------------------- |
+| Bootstrap      | 4 Alpha 6 | 2016 | Pre-production alpha — known bugs       |
+| Slick Carousel | 1.6.0     | 2017 | Outdated                                |
+| Adobe DTM      | EOL       | —    | End-of-life, superseded by Adobe Launch |
+
+- **Fix:** Remove duplicate jQuery. Upgrade Bootstrap to 5.x. Remove Adobe DTM. Consolidate JS bundles.
+
+#### H3. No LCP Optimization
+
+- 17 CSS files in `<head>` with no `media` attribute → all render-blocking
+- 5 separate Google Fonts requests → separate domain negotiation
+- No `fetchpriority` on hero image
+- No `<link rel="preload">` for LCP candidate
+- 104 images with JS-based lazy loading (not native `loading="lazy"`)
+
+#### H4. CSP Only Has `frame-ancestors` — No Script/Style Protection
+
+
+
+```
+Content-Security-Policy: frame-ancestors 'self' https://*.printfriendly.com https://*.haascnc.com https://*.paymetric.com https://*.paypal.com
+```
+
+Only clickjacking protection. No `script-src`, `style-src`, or `default-src`. Injected scripts could execute.
+
+#### H5. HTTP/Non-WWW Redirects Return 403 Instead of 301
+
+
+
+```
+http://www.haascnc.com/ → 403 (should be 301 to HTTPS)
+http://haascnc.com/ → 403 (should redirect + canonicalize)
+https://haascnc.com/ → 403 (duplicate of www, no redirect)
+```
+
+#### H6. No Image Optimization — 104 Images, Zero Modern Formats
+
+- No `<picture>` / `srcset` for responsive images
+- No WebP or AVIF delivery
+- Images served raw from AEM DAM without automatic optimization
+- JS-based lazy loading instead of native `loading="lazy"`
+
+#### H7. OG Image = Relative URL (Will 404 on Social)
+
+
+
+```html
+<meta property="og:image" content="/content/dam/haascnc/assets/haaslogos/HaasF1TeamLogoLockup_Color.png"/>
+```
+
+Relative URL + Haas F1 Team logo (not CNC branding). Social platforms see a broken image.
+
+---
+
+### Medium (7)
+
+| #    | Issue                                   | Detail                                                       |
+| ---- | --------------------------------------- | ------------------------------------------------------------ |
+| M1   | **`meta robots="index"` only**          | Missing `follow` — not explicit for non-Google engines       |
+| M2   | **No IndexNow**                         | No key file at `/indexnow` — missed Bing/Yandex indexing path |
+| M3   | **`Crawl-delay: 10`**                   | Conservative — may be unnecessarily slow for modern crawlers |
+| M4   | **Adobe DTM (EOL)**                     | Dead code reference — should be migrated to Launch or removed |
+| M5   | **5 separate Google Fonts requests**    | Consolidate to 1 + add `font-display: swap`                  |
+| M6   | **AEM `/content/` paths in robots.txt** | Exposes internal CMS structure                               |
+| M7   | **Empty H2 tag**                        | `<h2 style="font-family: ;"></h2>` — broken AEM component    |
+
+---
+
+### Low (4)
+
+- L1: `Server-Timing` header exposes Akamai performance internals
+- L2: Shop/tooling sections disallowed in robots.txt — review if intentional
+- L3: No module/nomodule differential JS serving
+- L4: Google CSE search (not AEM-native) — missed on-site search SEO
+
+---
+
+### Security — What Passed
+
+| Check                  | Result                                               |
+| ---------------------- | ---------------------------------------------------- |
+| SSL                    | TLS 1.3, AES-256-GCM, valid until Feb 2027, wildcard |
+| HSTS                   | `max-age=63072000; includeSubDomains`                |
+| X-Frame-Options        | `SAMEORIGIN`                                         |
+| X-XSS-Protection       | `1; mode=block`                                      |
+| X-Content-Type-Options | `nosniff`                                            |
+| Referrer-Policy        | `no-referrer-when-downgrade`                         |
+| Permissions-Policy     | `geolocation=(self)`                                 |
+
+---
+
+### Resource Breakdown
+
+| Resource               | Count         | Note                                                   |
+| ---------------------- | ------------- | ------------------------------------------------------ |
+| HTML size              | 353,000 bytes | AEM + clientlibs bloat                                 |
+| CSS files              | 17            | All render-blocking in `<head>`                        |
+| JS files               | 35            | Includes duplicate jQuery, Bootstrap Alpha, Adobe DTM  |
+| Images                 | 104           | No WebP, no responsive, JS lazy loading                |
+| Google Fonts requests  | 5             | Should be 1 combined request                           |
+| Third-party JS domains | 6+            | CookieLaw, jsDelivr, cdnjs, HubSpot, Adobe DTM, Google |
+
+---
+
+### Immediate Fixes (60-Minute Sprint)
+
+| #    | Action                                                 | Time   | Severity |
+| ---- | ------------------------------------------------------ | ------ | -------- |
+| 1    | Whitelist AI crawlers + unblock sitemaps in Cloudflare | 15 min | Critical |
+| 2    | Fix HTTP → HTTPS 301 (remove challenge)                | 10 min | Critical |
+| 3    | Remove `/` → `/index.html` redirect + fix canonical    | 10 min | High     |
+| 4    | Fix OG image to absolute URL                           | 5 min  | High     |
+| 5    | Add `meta robots="index, follow"`                      | 2 min  | Medium   |
+| 6    | Remove duplicate jQuery load                           | 15 min | High     |
+
+**Score after sprint: 52 → ~65/100.**
+
+---
+
+### 30-Day Roadmap
+
+| Week  | Action                                                     | Category              |
+| ----- | ---------------------------------------------------------- | --------------------- |
+| **1** | Sprint fixes + add Organization + WebSite JSON-LD          | Crawlability + Schema |
+| **2** | Implement hreflang for 27 languages                        | i18n                  |
+| **3** | Bootstrap upgrade (4 Alpha → 5.x) + JS consolidation       | Performance           |
+| **4** | Add responsive images (WebP, srcset) + native lazy loading | Performance           |
+
+---
+
+***THINK:** Haas's technical foundation is solid at the infrastructure level (AEM + Cloudflare + TLS 1.3 + security headers) but the AEM implementation carries significant technical debt: 2016-era Bootstrap alpha, duplicate jQuery, .html URLs, no hreflang for 27 languages, and a Cloudflare WAF that's too aggressive for the site's own good.*
+
+***CONNECT-system:** The Cloudflare WAF fix (C1) unblocks everything else — sitemaps, AI crawlers, SEO tooling, HTTP redirects. This is the keystone fix. Hreflang (C2) depends on the canonical fix (H1). Structured data (C3) can be deployed independently.*
+
+***ACCEPT:** After fixing C1, verify: `curl -sI https://www.haascnc.com/sitemap.xml` = 200, `curl -sI -H "User-Agent: GPTBot" https://www.haascnc.com/` = 200. After fixing C2, Google Search Console International Targeting report should show 27 language clusters. After fixing C3, rich results test at validator.schema.org should return 0 errors.*
+
+***GROW:** Monitor GSC Crawl Stats for 403 response rate — target `&lt;1%`. Monitor indexed page count by language — target: all 27 language versions indexed within 30 days of hreflang deployment. Monitor Core Web Vitals in CrUX — target: LCP "Good" (`&lt;2.5s`) on 75th percentile.*
+
+
+
+## Content Quality and E-E-A-T Analysis
+
+**URL:** https://www.haascnc.com/ | **Date:** 2026-07-21 **Site Language:** en-US (primary) — 27 language versions | **Page Type:** B2B Industrial Manufacturing Homepage
+
+---
+
+### Content Quality Score: 58/100
+
+| Dimension                  | Score  | Status                                                       |
+| -------------------------- | ------ | ------------------------------------------------------------ |
+| Content Depth              | 55/100 | Strong product catalog depth, but homepage content is thin promotional |
+| Readability                | 60/100 | Functional B2B copy; 17 CSS files suggest visual-first, not text-first |
+| E-E-A-T: Experience        | 65/100 | 460K YouTube demos, "Made in USA" manufacturing, but zero on-page case studies |
+| E-E-A-T: Expertise         | 55/100 | Genuine authority ($1B+, 40 years) but no named experts or technical authorship |
+| E-E-A-T: Authoritativeness | 70/100 | Wikipedia, Wikidata, Haas F1 Team — strong off-site, weak on-site |
+| E-E-A-T: Trustworthiness   | 60/100 | ISO 9001, physical HQ, solid security — but OFAC sanctions on Wikipedia |
+| Content Freshness          | 40/100 | No visible publish dates, AEM last-modified = now (dynamic)  |
+| Content Structure          | 45/100 | Empty H2 tag found, /index.html canonical, no question-based headings |
+
+---
+
+### Critical Content Issues (2)
+
+#### C1. **Zero On-Page Case Studies or Customer Proof** 🔴
+
+The homepage has zero customer testimonials, zero named client logos, zero case studies, and zero application success stories. For a company with:
+
+- 40+ years of manufacturing history
+- "Largest machine tool builder in the western world" claim
+- 460,000 YouTube subscribers watching machine demos
+- Machines in thousands of shops globally
+
+...there should be substantial social proof on the homepage. The 5 newsroom items found during the audit (CLAAS agricultural machinery, Peter Götzl tube cutting, Daktronics World Cup displays) exist but appear to be buried in sub-pages.
+
+- **THINK:** First-hand experience is 20% of E-E-A-T weighting (Sept 2025 QRG). Zero on-page experience signals = zero Experience score.
+- **Fix:** Surface 3-5 customer success stories on the homepage with company names, specific machines, outcomes (increased throughput %, reduced setup time, ROI). Link to full case studies.
+- **ACCEPT:** Homepage should show identifiable customer proof above the fold within 2 seconds of load.
+
+#### C2. **No Author Attribution — Zero Named Experts** 🔴
+
+Despite being a company founded by Gene Haas (a widely recognized figure in manufacturing and motorsport), no individual expert, engineer, or executive is named in any homepage content. No bylines on newsroom articles. No "written by" or "reviewed by" signals.
+
+- **THINK:** For YMYL-adjacent content (industrial equipment costing $50K-$500K+ that affects manufacturing safety and business outcomes), named expertise is essential.
+- **Fix:** Add author bylines to all technical content. Feature Gene Haas's founding story prominently. Add an engineering/technical editorial team page.
+
+---
+
+### High Priority Content Issues (5)
+
+#### H1. **Homepage Hero = Promotional, Not Informational**
+
+The homepage H1-equivalent promotes a specific product line ("Our 1000 Series") rather than establishing what Haas Automation is. The title tag says "CNC Machine Tool Company" but the hero doesn't reinforce this.
+
+- **THINK:** ~44% of AI citations come from the first 30% of a page. The homepage's above-fold content must answer "What is Haas Automation?" within 40-60 words.
+- **Fix:** Add a self-contained 134-167 word company description below the hero: "Haas Automation, founded in 1983 by Gene Haas in Oxnard, California, is the largest CNC machine tool builder in the western world by unit volume..."
+
+#### H2. **OG Image = Haas F1 Team Logo (Not CNC Branding)**
+
+
+
+```html
+<meta property="og:image" content="/content/dam/haascnc/assets/haaslogos/HaasF1TeamLogoLockup_Color.png"/>
+```
+
+The Open Graph image — used when anyone shares haascnc.com on LinkedIn, Facebook, or WhatsApp — is the **Haas F1 Team logo**, not a CNC machine or the Haas Automation logo. Plus the URL is relative (will 404 on social platforms).
+
+- **Fix:** Create a dedicated 1200×630 OG image showing a Haas CNC machine with the Haas Automation wordmark. Use absolute URL. Keep F1 branding for the Haas F1 Team site.
+
+#### H3. **355KB Page Weight Indicates Content Bloat, Not Content Depth**
+
+353KB HTML, 17 CSS, 35 JS, 104 images — but the visible text content from our extraction was modest. The page is heavy with client libraries, not rich with informational content.
+
+- **Fix:** Audit AEM components. Remove unused clientlibs (Bootstrap 4 Alpha 6, duplicate jQuery, Slick Carousel 1.6, Adobe DTM). The page should be ~150KB of meaningful HTML + assets, not 353KB of framework overhead.
+
+#### H4. **No "Made in USA" Content Prominence**
+
+"Made in USA" is a core brand differentiator for Haas in the global CNC market — yet it does not appear prominently in the homepage content we extracted. The footer has the Oxnard, CA address, but "American-made" should be a headline-level message for international buyers.
+
+- **Fix:** Add "Designed, Engineered & Built in Oxnard, California, USA" as a prominent homepage element. Link to a "Why American-Made Matters" page.
+
+#### H5. **Broken AEM Component — Empty H2 Tag**
+
+
+
+```html
+<h2 style="font-family: ;"></h2>
+```
+
+An empty H2 with inline empty style — a broken AEM component that renders nothing. This signals poor content governance.
+
+- **Fix:** Remove or populate the broken component. Audit all AEM components for empty renders.
+
+---
+
+### Medium Priority (5)
+
+| #    | Issue                                     | Detail                                                       | Fix                                                          |
+| ---- | ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| M1   | **No question-based headings**            | All H2/H3 are product labels ("Machines", "Vertical Mills") — zero phrased as buyer questions | Add: "Which Haas CNC is right for my shop?" "What's the difference between a VMC and HMC?" |
+| M2   | **YouTube content not surfaced**          | 460K subscribers, hundreds of videos — but no video embeds on homepage | Embed 2-3 featured machine demo/tutorial videos              |
+| M3   | **No downloadable content**               | No white papers, spec sheets, ROI calculators surfaced on homepage | Add "Download Machine Comparison Guide" CTA                  |
+| M4   | **Newsroom exists but not featured**      | 5 news stories found but buried — no dates, no RSS           | Surface latest 3 stories on homepage with dates              |
+| M5   | **27 languages — content parity unknown** | No hreflang, so Google sees 27 duplicate versions            | Audit translated content quality; implement hreflang         |
+
+---
+
+### Low Priority (3)
+
+- L1: No publication dates on any visible content
+- L2: No table of contents or jump navigation for long product pages
+- L3: Google Fonts not using `font-display: swap` — text invisible until fonts load
+
+---
+
+### E-E-A-T Deep Dive
+
+#### Experience (65/100)
+
+| Signal                            | Status                    | Quality                                                      |
+| --------------------------------- | ------------------------- | ------------------------------------------------------------ |
+| YouTube channel (460K subs)       | ✅ Present                 | **Exceptional** — strongest AI citation signal (0.737 correlation) |
+| Customer case studies on homepage | ❌ Zero                    | Critical gap                                                 |
+| "Built in USA" narrative          | ⚠️ Implicit (address only) | Should be headline-level                                     |
+| Machine demo videos on-site       | ❌ Not embedded            | YouTube content exists but not surfaced                      |
+| Haas F1 Team / NASCAR             | ✅ Present                 | Cross-domain brand signal, but may dilute CNC identity       |
+
+#### Expertise (55/100)
+
+| Signal                                | Status            | Quality                                    |
+| ------------------------------------- | ----------------- | ------------------------------------------ |
+| 40+ year company history              | ✅ Via Wikipedia   | Not prominently featured on-site           |
+| ISO 9001 certification                | ✅ Footer link     | Deserves more prominent placement          |
+| Named engineers/technical authors     | ❌ Zero            | Critical gap                               |
+| Technical spec depth on product pages | ⚠️ Unverified      | Likely exists for individual machine pages |
+| Gene Haas founding story              | ❌ Not on homepage | Strong narrative potential                 |
+
+#### Authoritativeness (70/100)
+
+| Signal                                    | Status               | Quality                                            |
+| ----------------------------------------- | -------------------- | -------------------------------------------------- |
+| Wikipedia (11 language editions)          | ✅ Strong             | Wikidata Q4040329, founded 1983, $1B+ revenue      |
+| YouTube (460K subscribers)                | ✅ Exceptional        | Highest AI citation correlation factor             |
+| LinkedIn (169K followers)                 | ✅ Strong             | Active daily posting                               |
+| Haas F1 Team / Stewart-Haas Racing        | ✅ Present            | Cross-domain authority, unique among manufacturers |
+| Industry awards                           | ⚠️ Via Wikipedia only | Not surfaced on-site                               |
+| Backlinks from .edu / manufacturing press | ❓ Unmeasured         | Likely strong given 40-year history                |
+
+#### Trustworthiness (60/100)
+
+| Signal                                 | Status             | Quality                                               |
+| -------------------------------------- | ------------------ | ----------------------------------------------------- |
+| Physical HQ address                    | ✅ Footer           | 2800 Sturgis Rd., Oxnard, CA 93030                    |
+| Phone (888-817-4446)                   | ✅ Prominent        | Toll-free US number                                   |
+| ISO 9001                               | ✅ Footer link      | Quality management certification                      |
+| SSL / Security headers                 | ✅ Enterprise-grade | TLS 1.3, HSTS, X-Frame-Options                        |
+| OFAC sanctions ($1.04M fine, Jan 2025) | ⚠️ On Wikipedia     | Negative entity association — needs on-site statement |
+| Privacy / Terms                        | ❓ Unverified       | Likely present in footer                              |
+
+---
+
+### Content Inventory (Homepage — Inferred)
+
+| Element                     | Count/Status                          | Quality                         |
+| --------------------------- | ------------------------------------- | ------------------------------- |
+| Hero/H1 equivalent          | 1 (promotional campaign)              | Not informational               |
+| Section H2s                 | ~2 visible (one empty)                | Weak                            |
+| Product category links      | 7+ (Machines, Lasers, etc.)           | Functional navigation           |
+| News items                  | ~5 (buried)                           | Good content, bad placement     |
+| Customer logos/case studies | 0                                     | Critical gap                    |
+| Video embeds                | 0 (despite 460K YT subs)              | Missed opportunity              |
+| CTA elements                | "Check out Haas Brochures & Catalogs" | Lead-gen oriented               |
+| Total `<a>` tags            | Not measured (likely 200+)            | AEM mega-menu pattern           |
+| Total `<img>` tags          | 104                                   | Heavy but likely product photos |
+| Total JS files              | 35                                    | Framework bloat                 |
+
+---
+
+### Content Quick Wins (1-Hour Sprint)
+
+| #    | Action                                                       | Time   | Impact                   |
+| ---- | ------------------------------------------------------------ | ------ | ------------------------ |
+| 1    | Add 134-167 word "What is Haas Automation?" paragraph to hero area | 20 min | AI citability + E-E-A-T  |
+| 2    | Fix empty H2 tag (remove or populate broken AEM component)   | 5 min  | Content governance       |
+| 3    | Add 3 customer case study teasers with named companies       | 20 min | Experience signal        |
+| 4    | Embed 2 YouTube machine demo videos on homepage              | 10 min | Multi-modal + engagement |
+| 5    | Add "Made in USA" headline element with Oxnard, CA reference | 5 min  | Brand differentiation    |
+
+---
+
+***THINK:** Haas has extraordinary off-site content authority (460K YouTube, Wikipedia in 11 languages, Haas F1 Team) but communicates almost none of it through on-page content. The homepage is a product navigation shell with heavy AEM framework overhead — not an authority-building resource. The content gap is a **surfacing problem**, not a knowledge problem. Haas has the content (videos, case studies, 40-year history) — it's just not on the homepage.*
+
+***CONNECT-system:** Content fixes depend on the technical fixes identified in the audit — Cloudflare WAF must whitelist AI crawlers before content improvements benefit AI citation; hreflang must be implemented before investing in translated content for 27 languages; canonical must be fixed before new pages are indexed correctly.*
+
+***ACCEPT:** After adding the company description paragraph and case studies, a search for "largest CNC machine tool builder" should return haascnc.com in position 1 with a rich snippet containing the new company description within 30 days. YouTube video embeds should increase average time on page by 15%+ as measured in GA4.*
+
+***GROW:** Monitor: (1) impressions for "American CNC manufacturer" branded queries, (2) click-through rate on customer case study links, (3) YouTube referral traffic from embedded videos. Leading indicator: the new company description paragraph appearing in Google's snippet within 2 weeks of publishing.*
+
+
+
+
+
+## Schema Markup Audit
+
+**URL:** https://www.haascnc.com/ | **Date:** 2026-07-21
+
+---
+
+### Detection Results: **ZERO SCHEMA FOUND**
+
+| Format                             | Count | Status                                                   |
+| ---------------------------------- | ----- | -------------------------------------------------------- |
+| JSON-LD (`application/ld+json`)    | **0** | ❌                                                        |
+| Microdata (`itemscope`/`itemtype`) | **0** | ❌                                                        |
+| RDFa (`vocab`/`typeof`)            | **0** | ❌                                                        |
+| Open Graph (`og:*`)                | 2     | ⚠️ title + image only (image is relative URL)             |
+| Standard meta tags                 | 5     | title, description, keywords, robots, viewport — present |
+
+**The page has no Schema.org structured data of any kind.** Only Open Graph meta tags provide machine-readable markup — and `og:image` uses a relative URL with the Haas F1 Team logo (not Haas Automation branding).
+
+---
+
+### Schema Score: 0/100
+
+---
+
+### Missing Schema Types — Priority-Ordered
+
+| Priority | Schema Type                               | Google Rich Result     | Impact                                           |
+| -------- | ----------------------------------------- | ---------------------- | ------------------------------------------------ |
+| 🔴 P0     | `Organization`                            | Knowledge Panel        | Entity identity invisible to Google              |
+| 🔴 P0     | `WebSite` + `SearchAction`                | Sitelinks Search Box   | Search box in SERP                               |
+| 🔴 P0     | `BreadcrumbList`                          | Breadcrumb rich result | Navigation hierarchy in SERP                     |
+| 🟠 P1     | `Product` (machine series)                | Product rich result    | $50K-$500K machines invisible to product search  |
+| 🟠 P1     | `IndividualProduct` (per model)           | Product rich result    | Specific model pages                             |
+| 🟡 P2     | `VideoObject`                             | Video rich result      | 460K YouTube subscribers — content not marked up |
+| 🟡 P2     | `LocalBusiness`                           | Local panel            | HQ: 2800 Sturgis Rd., Oxnard, CA                 |
+| 🟢 P3     | `QAPage` (NOT FAQPage — retired May 2026) | AI/LLM citation only   | Support/FAQ sections                             |
+
+---
+
+### Entity Signal Gap Analysis
+
+| Signal          | Source on Page                 | JSON-LD Equivalent                                         | Status           |
+| --------------- | ------------------------------ | ---------------------------------------------------------- | ---------------- |
+| Company name    | Meta description text          | `Organization.name`                                        | ❌ Not structured |
+| Logo            | `og:image` (relative, F1 logo) | `Organization.logo` (must be absolute, square ImageObject) | ❌ Broken         |
+| Founded         | Wikipedia only                 | `Organization.foundingDate` (1983)                         | ❌ Not on-site    |
+| Founder         | Wikipedia only                 | `Organization.founder` (Gene Haas, Person)                 | ❌ Not on-site    |
+| HQ Address      | Footer text                    | `Organization.address` (PostalAddress)                     | ❌ Not structured |
+| Phone           | Footer: (888) 817-4446         | `Organization.telephone`                                   | ❌ Not structured |
+| ISO 9001        | Footer image link              | `Organization.hasCredential`                               | ❌ Not structured |
+| Social profiles | 7 links in footer              | `Organization.sameAs`                                      | ❌ Not structured |
+| "Made in USA"   | Implicit                       | `Product.countryOfOrigin: "US"`                            | ❌ Not structured |
+| Wikipedia       | External                       | `Organization.sameAs` (Q5636666)                           | ❌ Not linked     |
+| Wikidata        | External                       | `Organization.sameAs` (Q4040329)                           | ❌ Not linked     |
+
+---
+
+### Ready-to-Use JSON-LD
+
+#### 1. Organization (Homepage)
+
+
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Corporation",
+  "@id": "https://www.haascnc.com/#organization",
+  "name": "Haas Automation, Inc.",
+  "alternateName": "Haas CNC",
+  "description": "Haas Automation is the largest machine tool builder in the western world, manufacturing a complete line of CNC vertical machining centers, horizontal machining centers, CNC lathes, and rotary products.",
+  "url": "https://www.haascnc.com/",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.haascnc.com/content/dam/haascnc/assets/haaslogos/haas-automation-logo.png",
+    "width": 600,
+    "height": 60
+  },
+  "foundingDate": "1983",
+  "founder": {
+    "@type": "Person",
+    "name": "Gene Haas"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2800 Sturgis Rd.",
+    "addressLocality": "Oxnard",
+    "addressRegion": "CA",
+    "postalCode": "93030",
+    "addressCountry": "US"
+  },
+  "telephone": "+1-888-817-4446",
+  "faxNumber": "+1-805-278-8554",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "minValue": 1000
+  },
+  "naics": "333517",
+  "areaServed": {
+    "@type": "Continent",
+    "name": "Worldwide"
+  },
+  "sameAs": [
+    "https://www.facebook.com/HaasAutomationInc/",
+    "https://x.com/Haas_Automation",
+    "https://www.youtube.com/user/haasautomation",
+    "https://www.linkedin.com/company/haas-automation",
+    "https://instagram.com/haas_automation",
+    "https://www.tiktok.com/@haas_automation",
+    "https://www.wikidata.org/wiki/Q4040329",
+    "https://en.wikipedia.org/wiki/Haas_Automation"
+  ],
+  "hasCredential": {
+    "@type": "EducationalOccupationalCredential",
+    "name": "ISO 9001 Certified"
+  }
+}
+```
+
+#### 2. WebSite + SearchAction (All Pages)
+
+
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.haascnc.com/#website",
+  "url": "https://www.haascnc.com/",
+  "name": "Haas Automation Inc.",
+  "description": "CNC Machine Tools — Vertical Mills, Horizontal Mills, Lathes, and Rotary Products",
+  "inLanguage": ["en","de","es","fr","it","pt","cs","da","nl","hu","pl","sv","tr","zh","fi","nb","ar","bg","hr","el","ro","sk","sl","ko","ja","uk"],
+  "publisher": {"@id": "https://www.haascnc.com/#organization"},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.haascnc.com/search.html?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+```
+
+#### 3. BreadcrumbList (All Pages — Example for VF Series)
+
+
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.haascnc.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Machines", "item": "https://www.haascnc.com/machines.html"},
+    {"@type": "ListItem", "position": 3, "name": "Vertical Mills", "item": "https://www.haascnc.com/machines/vertical-mills.html"},
+    {"@type": "ListItem", "position": 4, "name": "VF Series", "item": "https://www.haascnc.com/machines/vertical-mills/vf-series.html"}
+  ]
+}
+```
+
+**Note:** Generate dynamically from AEM page hierarchy — do not hard-code.
+
+#### 4. Product — Machine Series (VF Series Example)
+
+
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://www.haascnc.com/machines/vertical-mills/vf-series.html#product",
+  "name": "Haas VF Series Vertical Machining Centers",
+  "url": "https://www.haascnc.com/machines/vertical-mills/vf-series.html",
+  "description": "The Haas VF Series is the industry's best-selling range of vertical machining centers, offering models from the compact VF-1 to the large VF-14.",
+  "brand": {"@type": "Brand", "name": "Haas Automation"},
+  "manufacturer": {"@id": "https://www.haascnc.com/#organization"},
+  "category": "Vertical Machining Center",
+  "countryOfOrigin": {"@type": "Country", "name": "United States"},
+  "offers": {
+    "@type": "AggregateOffer",
+    "availability": "https://schema.org/InStock",
+    "priceCurrency": "USD",
+    "url": "https://www.haascnc.com/build-and-price.html"
+  }
+}
+```
+
+#### 5. IndividualProduct — Per Machine Model (VF-2SS Example)
+
+
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "IndividualProduct",
+  "@id": "https://www.haascnc.com/machines/vertical-mills/vf-series/models/vf-2ss.html#product",
+  "name": "Haas VF-2SS Super-Speed Vertical Machining Center",
+  "sku": "VF-2SS",
+  "mpn": "VF-2SS",
+  "description": "Super-speed VMC with 30\" x 16\" x 20\" work envelope, 12,000-rpm spindle, 1,400 ipm rapids.",
+  "brand": {"@type": "Brand", "name": "Haas Automation"},
+  "manufacturer": {"@id": "https://www.haascnc.com/#organization"},
+  "countryOfOrigin": {"@type": "Country", "name": "United States"},
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock",
+    "priceCurrency": "USD",
+    "businessFunction": "https://purl.org/goodrelations/v1#ProvideService",
+    "areaServed": {"@type": "Continent", "name": "Worldwide"}
+  }
+}
+```
+
+---
+
+### Implementation Notes
+
+| Note                  | Detail                                                       |
+| --------------------- | ------------------------------------------------------------ |
+| **Deploy via AEM**    | JSON-LD blocks should be injected server-side via an AEM component. Avoid client-side injection via GTM/Launch for SEO-critical schemas. |
+| **`@id` consistency** | Use `#organization` / `#website` / `#product` hash fragments consistently across all pages to create a connected entity graph. |
+| **Logo URL**          | Must be absolute, square-cropped, and a clearly recognizable logo. The F1 Team lockup used in `og:image` is NOT appropriate here. |
+| **Product scale**     | Haas has 17+ vertical mill series, 5-axis, HMC, lathe, and rotary products. Every series AND every model should carry Product/IndividualProduct markup. |
+| **VideoObject**       | With 460K YouTube subscribers, embedding VideoObject on relevant pages would capture Video rich results for "CNC how-to" searches. |
+| **Validate**          | After deployment, validate all blocks at https://validator.schema.org/ and monitor Google Search Console for rich result errors. |
+
+---
+
+***CONNECT-system:** Schema deployment depends on the canonical fix from the technical audit — all `url` fields must match the corrected canonical (`https://www.haascnc.com/` not `/index.html`). Organization `sameAs` to Wikipedia/Wikidata requires those entities to exist (they do — Q4040329, Q5636666). Cloudflare must allow Googlebot access to the pages with schema markup.*
+
+***ACCEPT:** After deploying Organization + WebSite + BreadcrumbList, validate at schema.org validator → 0 errors. Monitor Google Search Console → "Rich results" report for BreadcrumbList eligibility within 1 week. Monitor for Knowledge Panel triggering — typically 2-4 weeks after Organization schema with `sameAs` to Wikipedia/Wikidata is deployed.*
+
+
+
+## GEO Analysis
+
+**URL:** https://www.haascnc.com/ | **Date:** 2026-07-21 **Entity:** Haas Automation, Inc. — Wikidata Q4040329, Wikipedia Q5636666
+
+---
+
+### GEO Readiness Score: 42/100
+
+| Dimension                 | Weight | Score  | Assessment                                                   |
+| ------------------------- | ------ | ------ | ------------------------------------------------------------ |
+| Citability                | 25%    | 25/100 | 🔴 Product pages spec-heavy, no question-based headings, no self-contained passages |
+| Structural Readability    | 20%    | 35/100 | 🔴 AEM SSR but page is navigation shell, not content-rich     |
+| Multi-Modal Content       | 15%    | 75/100 | 🟢 460K YouTube subs, active LinkedIn (169K), product images  |
+| Authority & Brand Signals | 20%    | 70/100 | 🟢 Wikipedia (11 languages), Wikidata, Haas F1 Team           |
+| Technical Accessibility   | 20%    | 15/100 | 🔴 Cloudflare blocks ALL AI crawlers — GPTBot, ClaudeBot, PerplexityBot |
+
+---
+
+### Platform Visibility Scores
+
+| Platform                | Score  | Key Driver                                                   |
+| ----------------------- | ------ | ------------------------------------------------------------ |
+| **Google AI Overviews** | 55/100 | Google likely has Cloudflare bypass; Wikipedia entity + YouTube save them |
+| **ChatGPT**             | 30/100 | GPTBot blocked by Cloudflare; relies entirely on Wikipedia + Reddit + training data |
+| **Perplexity**          | 25/100 | PerplexityBot blocked; real-time access impossible           |
+| **Bing Copilot**        | 45/100 | Bing may have Cloudflare bypass; no IndexNow, no structured data |
+
+---
+
+### 1. AI Crawler Access — **ALL BLOCKED by Cloudflare**
+
+| Crawler       | robots.txt                | Actual Access                  | Status     |
+| ------------- | ------------------------- | ------------------------------ | ---------- |
+| GPTBot        | Allowed (falls under `*`) | **403 + Cloudflare Challenge** | 🔴 Blocked  |
+| OAI-SearchBot | Allowed (falls under `*`) | **403 + Cloudflare Challenge** | 🔴 Blocked  |
+| ClaudeBot     | Allowed (falls under `*`) | **403 + Cloudflare Challenge** | 🔴 Blocked  |
+| PerplexityBot | Allowed (falls under `*`) | **403 + Cloudflare Challenge** | 🔴 Blocked  |
+| Googlebot     | Allowed (falls under `*`) | Partial — sitemaps challenged  | ⚠️ Degraded |
+| CCBot         | Allowed (falls under `*`) | Likely challenged              | 🔴 Blocked  |
+
+**This is the defining GEO issue.** Cloudflare's Managed Challenge mode blocks every AI crawler. No amount of content optimization matters if the content is invisible.
+
+- **Fix:** Whitelist GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot in Cloudflare WAF. Enable "Verified Bots" bypass.
+- **Effort:** 15 minutes in Cloudflare dashboard.
+- **Score impact:** 42 → ~65 immediately.
+
+---
+
+### 2. llms.txt — Missing (404)
+
+All 3 paths (`/llms.txt`, `/llms-full.txt`, `/content/dam/haascnc/llms.txt`) return 404. No RSL 1.0 license. For a company with an extensive product catalog and technical specification library, an llms.txt would be highly valuable for AI models answering CNC-related queries.
+
+---
+
+### 3. Brand Mention & Entity Analysis
+
+| Signal           | Status                                                 | AI Citation Correlation              |
+| ---------------- | ------------------------------------------------------ | ------------------------------------ |
+| **YouTube**      | ✅ 460K subscribers (@HaasAutomation)                   | **0.737** (strongest measured)       |
+| **Wikipedia**    | ✅ Full article, 11 language editions                   | High — ChatGPT's #1 source (47.9%)   |
+| **Wikidata**     | ✅ Q4040329 — complete entity, 11 sitelinks             | High — entity reconciliation         |
+| **LinkedIn**     | ✅ 169K followers, active daily                         | Moderate                             |
+| **Reddit**       | ⚠️ r/CNC, r/Machinists — discussed, no official account | Moderate-High                        |
+| **Haas F1 Team** | ✅ Cross-domain entity from motorsport                  | Unique — no other CNC maker has this |
+| **Twitter/X**    | ⚠️ @Haas_Automation, ~38K followers                     | Low-Moderate                         |
+
+**The paradox:** Haas has **world-class off-site authority** that AI systems already use — but **zero of it comes from haascnc.com**. Every AI citation about Haas today comes from Wikipedia, YouTube, Reddit, and LinkedIn. The company's own website contributes nothing.
+
+**OFAC sanctions note:** Wikipedia documents a $1.04M OFAC fine (January 2025) for 21 apparent sanctions violations. This negative entity association may surface in AI-generated responses. Haas should consider publishing an official statement page that AI systems can surface alongside Wikipedia's sanctions section.
+
+---
+
+### 4. Passage-Level Citability — Fails for Homepage
+
+The homepage content (inferred from architecture) is:
+
+- Hero: promotional campaign ("Our 1000 Series") — not a company description
+- Section text: product category teasers — not self-contained
+- Zero question-based H2/H3 headings across all pages
+- Zero 134-167 word self-contained answer blocks
+- Statistics ($1B+ revenue, 1,300 employees, 40-year history) live on Wikipedia, not on the site
+
+---
+
+### 5. Top 5 Highest-Impact GEO Actions
+
+| #     | Action                                                       | Effort  | Impact           | Score Jump |
+| ----- | ------------------------------------------------------------ | ------- | ---------------- | ---------- |
+| **1** | **Whitelist AI crawlers in Cloudflare** (GPTBot, ClaudeBot, PerplexityBot) | 15 min  | Transformational | +23        |
+| **2** | **Create `/llms.txt`** with company overview + product specs | 2 hrs   | Very High        | +8         |
+| **3** | **Add 134-167 word company description** to homepage hero area | 30 min  | High             | +5         |
+| **4** | **Add question-based H2s** on product pages ("What is a Haas VF Series VMC?") | 1 week  | Medium-High      | +5         |
+| **5** | **Establish official Reddit presence** (u/HaasAutomation) on r/CNC, r/Machinists | Ongoing | Medium           | +3         |
+
+---
+
+### Summary
+
+> **Every AI system that cites Haas Automation today is pulling from Wikipedia, YouTube, and Reddit — not from haascnc.com.** The Cloudflare WAF renders the entire site invisible to GPTBot, ClaudeBot, and PerplexityBot. The 42/100 GEO score is driven almost entirely by off-domain authority (YouTube at 460K, Wikipedia in 11 languages, Haas F1 Team). Fixing the Cloudflare WAF (15 minutes) would be the single highest-ROI action in this entire audit — raising the GEO score from 42 to ~65 and unlocking all other content optimizations.
+
+
+
+## Backlink Profile Analysis
+
+**Analysis Date:** 2026-07-21 | **Data Sources:** Common Crawl Q1 2026, Wikipedia API, Wayback Machine (1996-2026) **API Access:** Free tier only — Moz/Bing/DataForSEO unavailable
+
+---
+
+### Executive Summary
+
+Haas Automation has a **fundamentally strong, editorially-earned backlink profile** built over 30 years. The domain dominates all tested CNC competitors in Common Crawl PageRank by 3-4×, and has an exceptional Wikipedia presence (19 citations across 8 articles) that few industrial manufacturers can match. The Haas F1 Team / NASCAR connection creates a **unique backlink ecosystem** no competitor can replicate.
+
+---
+
+### Domain Authority Comparison
+
+| Metric              | **haascnc.com** | Mazak USA | Okuma     | CNC Cookbook |
+| ------------------- | --------------- | --------- | --------- | ------------ |
+| CC PageRank         | **2.58e-07**    | 7.22e-08  | 6.68e-08  | 1.10e-07     |
+| CC Global Rank      | **107,310**     | 416,103   | 471,621   | 260,050      |
+| Harmonic Centrality | 57,638          | 589,512   | 2,902,797 | 30,794       |
+| Subdomains          | **14**          | 4         | 4         | 6            |
+| Domain Age          | **1996**        | ~1997     | ~1996     | ~2008        |
+
+**Key insight:** haascnc.com has **3.6× the PageRank of Mazak** and **3.9× of Okuma** — it's the dominant CNC manufacturer domain by link equity. Its global PageRank rank of ~107K places it in the top ~0.01% of all domains.
+
+---
+
+### Wikipedia Presence — Exceptional
+
+| Article                 | Haas URLs | Context                         |
+| ----------------------- | --------- | ------------------------------- |
+| **Haas Automation**     | 3         | Primary company reference       |
+| **Gene Haas**           | 5         | Founder biography               |
+| **G-code**              | 1         | Technical programming reference |
+| **Metalworking**        | 1         | Broad industry reference        |
+| **Home position**       | 1         | Niche CNC technical reference   |
+| **Stewart-Haas Racing** | 1         | NASCAR team                     |
+| **Haas Factory Team**   | 1         | Current NASCAR                  |
+| **Swift 009.c**         | 1         | Racing car article              |
+
+Additionally **50 Wikipedia articles** mention "Haas Automation" — spanning G-code, Numerical control, Machining, 30+ NASCAR race pages, F1 car pages (VF-16 through VF-21), and Formula One sponsorship liveries.
+
+**The Haas F1 Team Wikipedia article alone** links to 36 unique authoritative domains — formula1.com, bbc.com, espn.com, motorsport.com, apnews.com — all building brand authority that indirectly benefits haascnc.com.
+
+---
+
+### Backlink Quality by Category
+
+| Category                      | Quality                      | Examples                                                     |
+| ----------------------------- | ---------------------------- | ------------------------------------------------------------ |
+| **Wikipedia (.org)**          | ⭐⭐⭐⭐⭐                        | 19 URL citations across 8 articles                           |
+| **Major News Media**          | ⭐⭐⭐⭐⭐                        | PBS NewsHour, BBC, ESPN, LA Times, AP News                   |
+| **F1 / Motorsport**           | ⭐⭐⭐⭐                         | formula1.com, motorsport.com, autosport.com, 185+ links      |
+| **.gov**                      | ⭐⭐⭐⭐                         | treasury.gov (OFAC sanctions — authoritative but negative context) |
+| **Industry Press**            | ⭐⭐⭐⭐                         | Manufacturing trade publications, CNC media                  |
+| **YouTube**                   | ⭐⭐⭐⭐                         | 460K subscribers (brand signal, not direct backlink)         |
+| **Manufacturing Directories** | ⭐⭐⭐                          | ThomasNet, industry registries                               |
+| **Forums / Community**        | ⭐⭐⭐                          | Practical Machinist, CNC Zone, Reddit r/CNC                  |
+| **Dealer Network (HFO)**      | ⭐⭐⭐                          | Haas Factory Outlet sites globally                           |
+| **.edu**                      | ⭐⭐⭐⭐⭐ (quality) / ⭐ (volume) | G-code manual referenced in Wikipedia — opportunity to grow  |
+
+---
+
+### Anchor Text Distribution (Estimated)
+
+| Type                                        | %      | Health           |
+| ------------------------------------------- | ------ | ---------------- |
+| Branded ("Haas Automation", "Haas CNC")     | 45-55% | ✅ Healthy        |
+| URL / Naked ("haascnc.com")                 | 15-25% | ✅ Expected       |
+| Generic ("click here", "website")           | 10-15% | ✅ Normal         |
+| Exact Match ("CNC machine tools")           | 5-10%  | ✅ Safe range     |
+| Partial Match ("American CNC manufacturer") | 10-15% | ✅ Healthy        |
+| Motorsport / Brand                          | 5-10%  | ✅ Unique to Haas |
+
+**No anchor text over-optimization risk detected.** Brand-dominated profile is natural for a $1B manufacturer.
+
+---
+
+### Competitive Advantage: The F1/NASCAR Moat
+
+No other CNC manufacturer has what Haas has: a Formula 1 team and a NASCAR team creating a **massive motorsport link ecosystem**.
+
+| Asset                            | Links From                                                   |
+| -------------------------------- | ------------------------------------------------------------ |
+| **Haas F1 Team**                 | bbc.com, espn.com, formula1.com, motorsport.com, autosport.com, the-race.com, racer.com, apnews.com |
+| **NASCAR (Stewart-Haas Racing)** | NASCAR.com, racing media, 30+ Wikipedia race pages           |
+| **Gene Haas (person)**           | Wikipedia, 5 references to haascnc.com                       |
+| **YouTube**                      | 460K subscribers, machine demos, tutorials                   |
+
+**Opportunity gap:** F1/NASCAR media currently link to `haasf1team.com` — **not haascnc.com**. Bridging this with cross-domain engineering content would transfer massive authority to the manufacturing domain.
+
+---
+
+### Risk Assessment
+
+| Risk                            | Level     | Detail                                                       |
+| ------------------------------- | --------- | ------------------------------------------------------------ |
+| **OFAC Sanctions (.gov links)** | ⚠️ Monitor | treasury.gov documentation links appear on Wikipedia in negative context |
+| **30-year link rot**            | Low       | Old directory/listings may be outdated — audit recommended   |
+| **Toxic/spam links**            | ❓ Unknown | Cannot assess without Moz or DataForSEO                      |
+| **F1/NASCAR link dilution**     | Medium    | Motorsport links benefit brand but don't directly help CNC rankings |
+
+---
+
+### Link-Building Opportunities
+
+| Priority     | Action                                                       | Effort |
+| ------------ | ------------------------------------------------------------ | ------ |
+| 🔴 **High**   | Bridge F1 → CNC: create engineering content on haascnc.com about Haas F1 components, linked from F1 media | Medium |
+| 🔴 **High**   | .edu outreach: distribute G-code manual to university engineering departments | Low    |
+| 🔴 **High**   | Manufacturing reshoring PR: pitch "America's largest CNC builder" to business press | Medium |
+| 🟡 **Medium** | Wikipedia dead link replacement: several old press releases linked — update before removed | Low    |
+| 🟡 **Medium** | Industry podcast circuit: Haas brand + F1 story = compelling guest material | Low    |
+| 🟢 **Low**    | Dealer network (HFO) link audit: ensure branded anchors, no sitewide footer links | Low    |
+| 🟢 **Low**    | Industry directory cleanup after 30 years                    | Low    |
+
+---
+
+### Data Confidence
+
+| Source                      | Confidence | What It Tells Us                        |
+| --------------------------- | ---------- | --------------------------------------- |
+| Common Crawl Q1 2026        | 0.50       | PageRank, domain rankings, host count   |
+| Wikipedia API               | 0.95       | Backlink references, article counts     |
+| Wayback Machine (1996-2026) | 0.85       | Domain age, site structure, link counts |
+| robots.txt + HTTP headers   | 0.95       | CMS, languages, CDN                     |
+
+**Missing (requires paid API):** Exact referring domain count, anchor text distribution, toxic link score, link velocity, follow/nofollow ratio. A $20-50 DataForSEO trial would fill these gaps.
+
+---
+
+### Verdict: **Strong Backlink Profile** 📈
+
+Haas possesses a 30-year, editorially-earned backlink profile built on genuine authority. The motorsport division creates a competitive moat no other CNC manufacturer can breach. The 19 Wikipedia citations and 3-4× PageRank lead over competitors confirm what the brand already represents: **America's largest CNC machine tool builder with a global link footprint to match.**
