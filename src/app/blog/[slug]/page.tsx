@@ -132,7 +132,7 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
 
             <h1 className="mt-4 max-w-4xl text-4xl font-bold leading-[1.15] tracking-tight lg:text-5xl font-[family-name:var(--font-heading)]">
-              {post.frontmatter.title}
+              {post.frontmatter.h1 || post.frontmatter.title}
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--color-text-secondary)] lg:text-xl">
               {post.frontmatter.description}

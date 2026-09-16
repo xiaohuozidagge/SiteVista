@@ -1,6 +1,7 @@
 ---
-title: "International SEO Audit: Multi-Language & Multi-Region Website Analysis [Demo]"
-description: "Learn how to audit international SEO — hreflang, geo-targeting, multi-language content, and international site architecture."
+title: "International SEO Audit: Complete Multilingual Checklist"
+description: "Audit hreflang, canonicals, multilingual URLs, localized content and international targeting with this practical international SEO checklist."
+h1: "International SEO Audit: Multilingual and Multi-Region Checklist"
 slug: "international-seo-audit"
 category: "technical-seo"
 categoryName: "Technical SEO"
@@ -14,62 +15,168 @@ featured: false
 draft: false
 noIndex: false
 canonical: ""
-relatedPosts: []
-faq: []
+relatedPosts:
+  - "technical-seo-audit"
+  - "on-page-seo-audit"
+  - "content-seo-audit"
+faq:
+  - question: "What is an international SEO audit?"
+    answer: "An international SEO audit reviews how well a multilingual or multi-region website serves each market — hreflang, canonicals, URL structure, localized content, and indexation by country and language."
+  - question: "What is the most common international SEO mistake?"
+    answer: "Broken hreflang reciprocity. If one page points to another but the target does not point back, search engines may ignore the entire hreflang cluster."
+  - question: "Should I use subdomains or subdirectories for languages?"
+    answer: "Subdirectories (example.com/fr/) consolidate authority under one domain and are easiest to maintain. Subdomains do not inherit the full authority of the main domain. Country-code domains carry the strongest geo-signal but cost the most to operate."
 ---
 
-Expanding a website to serve multiple countries or languages introduces a layer of complexity that domestic SEO does not have to contend with. International SEO is not just about translation--it is about ensuring that the right version of each page appears to the right users in the right markets, and that search engines understand the relationship between your regional and language variants.
+Expanding a website to serve multiple countries or languages introduces a layer of complexity that domestic SEO does not have to contend with. International SEO is not just about translation — it is about ensuring that the right version of each page appears to the right users in the right markets, and that search engines understand the relationship between your regional and language variants.
 
-An international SEO audit systematically checks every element of your global website configuration. Here is what to examine across five critical areas.
+This guide covers the full international audit, from hreflang through reporting. If you would rather have this done for you, see our [international SEO audit service](/international-seo-audit-services/) or the broader [website SEO audit service](/seo-audit/).
 
-## Hreflang Implementation
+## Hreflang Reciprocity
 
-Hreflang tags are the primary mechanism for telling search engines which language and regional audience each page is intended for. Despite their importance, hreflang implementations are among the most commonly broken elements in international SEO.
+Hreflang tags tell search engines which language and regional audience each page is intended for, and they are the most commonly broken element in international SEO.
 
-A thorough hreflang audit checks for several failure modes. Confirm that every page that has hreflang annotations receives reciprocal annotations from every page it references. If the English page points to the French page, the French page must point back to the English page. Broken reciprocity is one of the most frequent causes of hreflang-related ranking confusion.
+Reciprocity means that if the English page points to the French page, the French page must point back to the English page. Broken reciprocity is the single most frequent cause of hreflang-related ranking confusion, because search engines tend to ignore a cluster that does not resolve in both directions.
 
-Verify that hreflang codes use the correct format: language code alone for language targeting, or language plus country code for regional targeting. Check that all referenced URLs are canonical, return a 200 status, and are not blocked by robots.txt. Hreflang tags pointing to redirected or noindexed pages will be ignored.
+**Good:** EN page references FR and DE; FR references EN and DE; DE references EN and FR.
 
-Also audit for the self-referential hreflang tag. Each page should include an hreflang annotation for its own language and region combination. Missing self-references are a common oversight that can cause hreflang clusters to break.
+**Bad:** EN references FR and DE, but FR only references DE. The cluster is incomplete and may be ignored.
 
-## Geo-Targeting
+## Self-Referencing Hreflang
 
-Geo-targeting helps search engines understand which country a page or site section is intended to serve. Google uses several signals for this, and your audit should verify they are all aligned.
+Every page should include an hreflang annotation for its own language and region combination, alongside the annotations for its alternates.
 
-If you are using country-code top-level domains like .co.uk or .de, those inherently signal geographic targeting. For sites on generic top-level domains like .com, Google Search Console's International Targeting report lets you set a country preference. Audit this setting to confirm it matches your actual market targeting.
+A missing self-reference is a common oversight that can break the entire cluster. Google's documentation explicitly requires each page to include itself in its hreflang set.
 
-Server location is a minor geo-signal. While it carries less weight than it once did, hosting your site in the country you are targeting can provide a modest relevance boost and often improves page speed for local users.
+**Good:** the English page lists `hreflang="en"` for itself, plus `fr`, `de`, and `es` for its alternates.
 
-Local signals like local business schema, NAP consistency on location pages, and local backlinks also reinforce geo-targeting. An international audit should check these signals across each market you serve.
+**Bad:** the English page lists only `fr`, `de`, and `es` — omitting itself.
 
-## Multi-Language Structure
+## Valid Language and Country Codes
 
-How you organize multi-language content affects both user experience and crawl efficiency. The three common URL structures each have tradeoffs.
+Hreflang codes must use a valid ISO 639-1 language code, optionally followed by an ISO 3166-1 alpha-2 country code. The language code is required; the country code is optional and narrows the targeting.
 
-Country-code top-level domains provide the strongest geo-signal but are the most expensive and operationally complex to maintain. Subdomains like fr.example.com are easier to set up but do not inherit the full authority of the main domain. Subdirectories like example.com/fr/ consolidate authority under one domain and are generally the easiest to maintain.
+Check for invented or malformed codes such as `hreflang="eng"` (should be `en`), `hreflang="uk"` (should be `en-gb`), or `hreflang="en-uk"` (should be `en-gb`). A typo in a code silently disables the annotation.
 
-Your audit should verify that the chosen structure is implemented consistently. Mixed structures--using subdomains for some languages and subdirectories for others--create confusion for both users and search engines.
+## Canonical and Hreflang Conflicts
 
-Check that language and regional variants are properly linked through navigation elements that users can find and use. Avoid automatic redirects based on IP address or browser language without giving users the option to override and stay on their chosen version. Forced redirects can prevent search engines from crawling alternate language versions.
+A page that is canonicalized to a different language version while also participating in a hreflang cluster sends contradictory signals. The canonical and hreflang must agree.
 
-## International Content
+**Good:** the French page is self-canonical (`rel=canonical` → the French URL) and points its hreflang alternates to each language version.
 
-Translation quality directly affects ranking and user experience. Machine-translated content without human review reads poorly, and poorly translated pages have high bounce rates that signal low quality to search engines.
+**Bad:** the French page's canonical points to the English version while its hreflang cluster lists the French URL. Search engines are left to guess which signal wins.
 
-An international content audit checks that translated content is properly localized, not just translated. Localization means adapting cultural references, currency and measurement units, date formats, and examples to be relevant to the target audience. A case study about a US-based scenario may not resonate with users in Japan or Germany.
+Audit that every URL in a hreflang cluster is itself the canonical for its own version.
 
-Verify that key on-page elements are translated and optimized for each market. Title tags, meta descriptions, and H1 headings should be translated and keyword-researched independently per language--not just direct translations of the primary language versions. A keyword that performs well in English may have a completely different search volume and intent pattern in another language.
+## Redirected or Noindex Hreflang URLs
 
-## Common International SEO Issues
+Hreflang annotations must point to the final, canonical URL. An hreflang that points to a redirected URL, a noindexed page, or a page blocked by robots.txt is ignored.
 
-Several problems surface repeatedly in international SEO audits. Being aware of them helps you spot them faster.
+**Bad:** the French hreflang points to an old URL that 301-redirects to the new French page. The annotation should reference the destination, not the redirect.
 
-**Hreflang pointing to redirected URLs** wastes the annotation. The hreflang must point to the final canonical URL. If your French page redirects from an old URL, update the hreflang to reference the destination, not the redirect.
+Crawl every URL in your hreflang map and confirm each returns 200, is indexable, and is self-canonical.
 
-**Missing language annotations for key pages.** Many sites implement hreflang on their blog or core pages but forget about resource pages, tools, or documentation that drive significant international traffic.
+## Multilingual XML Sitemaps
 
-**Canonical tags that conflict with hreflang.** A page that is canonicalized to a different language version while also being included in hreflang clusters sends contradictory signals. Canonical and hreflang should agree.
+Each language version should be discoverable through your XML sitemaps, either in a single sitemap or in per-language sitemap files.
 
-**Inconsistent navigation between language versions.** If the English site has a resource section that the Spanish version omits, Spanish-speaking users lose access to content that could be valuable and converted.
+Check that the sitemap includes only indexable, canonical URLs and does not reference redirected or noindexed versions. For larger sites, per-language sitemaps with hreflang annotations inside the URL entries make the relationships explicit.
 
-An international SEO audit is more detail-intensive than a standard audit, but the payoff is proportional: markets you enter correctly compound your traffic from day one, while incorrectly configured international setups can fragment your authority across duplicate content for years.
+## Language and Regional URL Structure
+
+The three common structures each have tradeoffs. Country-code top-level domains (`.de`, `.fr`) provide the strongest geo-signal but are the most expensive to operate. Subdomains (`fr.example.com`) are easier to set up but do not inherit the full authority of the main domain. Subdirectories (`example.com/fr/`) consolidate authority and are generally the easiest to maintain.
+
+Whatever structure you choose, apply it consistently. Mixing subdomains for some languages and subdirectories for others confuses both users and search engines.
+
+## International Keyword Research
+
+A keyword that performs well in English may have a completely different search volume and intent in another language. Direct translations often miss the terms people actually use.
+
+Research keywords independently in each language, not by translating your English keyword list. Check that the translated term actually has search volume and matches the same intent. This is the foundation for the localized content work that follows.
+
+## Localized Title, Description, and H1
+
+Key on-page elements must be translated and optimized per market, not just carried over from the primary language.
+
+**Good:** a German page whose title, meta description, and H1 were researched in German and reflect German search terms.
+
+**Bad:** a German page whose title is a literal translation of the English title, ignoring how German searchers phrase the query.
+
+Audit that every language version has unique, localized titles, descriptions, and headings — not machine-copied duplicates.
+
+## Machine Translation Quality
+
+Machine-translated content without human review reads poorly and produces high bounce rates, which signal low quality to search engines.
+
+**Good:** translation produced by a machine but reviewed and edited by a native speaker who adapts examples, units, and tone.
+
+**Bad:** raw machine translation with mistranslated idioms and untranslated currency or measurement units.
+
+Localization goes beyond translation: adapt cultural references, currency, date formats, and examples so they are relevant to the target audience.
+
+## Navigation Between Language Versions
+
+Language and regional variants should be linked through a navigation element users can find and use — a language selector in the header or footer, ideally using `<link rel="alternate" hreflang>` rather than only JavaScript.
+
+Avoid forcing redirects based on IP address or browser language without giving users the option to override and stay on their chosen version. Forced redirects can prevent search engines from crawling alternate language versions.
+
+## International Internal Linking
+
+Internal links should connect related content across language versions where it genuinely helps the user, not link every page to every translation of every other page.
+
+**Good:** a French product page linking to the French category page, and the French version of a related guide.
+
+**Bad:** a French page with no internal links to other French content, forcing users back to the English site for everything.
+
+Anchor text should be in the language of the target page and describe it naturally.
+
+## Geo-Specific Trust Signals
+
+Search engines use multiple signals to determine geographic relevance. Country-code domains are the strongest; for generic domains, the International Targeting setting in Google Search Console lets you set a country preference.
+
+Local signals reinforce targeting: local business schema, consistent name-address-phone data on location pages, local currency and contact details, and links from sites in the target country. Audit that these signals are present and consistent for each market.
+
+## Indexation by Country and Language
+
+Use Search Console's international reports to verify that each language version is actually indexed and receiving impressions in its target market.
+
+**Bad:** a German version that is crawled but never indexed, meaning German searchers never see it regardless of how good the content is.
+
+Check index coverage per language directory or subdomain, and investigate any language version that is excluded or receiving no impressions.
+
+## International SEO Reporting
+
+International SEO reporting should be segmented by market. A single country's aggregate traffic hides whether one market is thriving while another is failing.
+
+Report on impressions, clicks, and rankings per country and language. Track hreflang errors over time, and monitor that each market's pages are indexed and gaining visibility. This is how you catch a market that silently breaks before it costs you revenue.
+
+## International SEO Checklist
+
+Run these checks for each language and region version of your site.
+
+| Check | What to Review | Common Problem | Recommended Fix | Priority |
+| --- | --- | --- | --- | --- |
+| Hreflang reciprocity | Every referenced page points back | One-way annotations | Make annotations reciprocal | High |
+| Self-referencing hreflang | Each page lists itself | Missing self-reference | Add self-reference to every page | High |
+| Language/region codes | Valid ISO codes | Invalid codes like `eng` or `uk` | Use correct ISO codes | High |
+| Canonical vs hreflang | Canonical and hreflang agree | Canonical points to another language | Make each page self-canonical | High |
+| Hreflang target status | Targets return 200 and are indexable | Redirected or noindexed targets | Point to final canonical URLs | High |
+| XML sitemaps | Per-language URLs included | Missing language versions | Add all indexable URLs | Medium |
+| URL structure | One consistent structure | Mixed subdomains and subdirectories | Standardize on one structure | Medium |
+| Keyword research | Researched per language | Direct translation of keywords | Research each market separately | High |
+| Localized metadata | Unique titles/descriptions/H1 | Literal translations | Localize and optimize per market | High |
+| Translation quality | Human-reviewed, localized | Raw machine translation | Review and adapt per market | High |
+| Language navigation | Visible, crawlable selector | JS-only or forced redirects | Use hreflang link elements | Medium |
+| Internal linking | Links within each language | No links between same-language pages | Link related same-language pages | Medium |
+| Geo trust signals | Local schema, NAP, links | No local signals | Add consistent local signals | Medium |
+| Indexation by market | Each version indexed and visible | German version not indexed | Investigate coverage per market | High |
+| Reporting | Segmented by country/language | Aggregate-only reporting | Report per market | Low |
+
+For a full audit that verifies each of these against your actual site, see our [international SEO audit service](/international-seo-audit-services/), or start with the broader [website SEO audit service](/seo-audit/).
+
+<AuditCTA
+  title="Need an International SEO Audit?"
+  description="Get a manually prepared multilingual audit covering hreflang, canonicals, localized content, and international targeting."
+  buttonText="Request an SEO Audit"
+  buttonUrl="/seo-audit/"
+/>

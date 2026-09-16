@@ -35,8 +35,8 @@ const steps = [
   },
   {
     step: 2,
-    title: "Complete Payment",
-    description: "Complete payment securely online. Your audit will be scheduled immediately.",
+    title: "Confirm Your Audit",
+    description: "Choose your audit package and confirm your website's scope and goals.",
   },
   {
     step: 3,
@@ -161,14 +161,11 @@ export default function AboutPage() {
             ))}
           </div>
           <div className="mt-10 text-center">
-            <p className="text-sm text-[var(--color-text-muted)] mb-4">
-              Payment processing will be available soon. You can learn more about our audit process now.
-            </p>
             <Link
               href="/seo-audit/"
               className="inline-flex items-center px-6 py-3 rounded-md bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-light)] transition-colors"
             >
-              Learn About SEO Audits
+              Request an SEO Audit
             </Link>
           </div>
         </section>

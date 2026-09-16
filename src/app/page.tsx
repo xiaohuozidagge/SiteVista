@@ -4,6 +4,8 @@ import { getAllPosts, toBlogCardData } from "@/lib/content/blog";
 import { getAllCases, toCaseCardData } from "@/lib/content/cases";
 import type { BlogCardData, CaseCardData } from "@/lib/content/types";
 import { HomeNewsletter } from "@/components/forms/HomeNewsletter";
+import { OrganizationSchema } from "@/components/seo/OrganizationSchema";
+import { WebSiteSchema } from "@/components/seo/WebSiteSchema";
 
 export const metadata: Metadata = {
   title: "Website SEO Audits, Guides & Case Studies | SEO Audit Pro",
@@ -23,6 +25,9 @@ export default function HomePage() {
 
   return (
     <>
+      <OrganizationSchema />
+      <WebSiteSchema />
+
       {/* Hero */}
       <section className="bg-[var(--color-primary)] text-white py-20 lg:py-28">
         <div className="container-site text-center">
@@ -31,27 +36,75 @@ export default function HomePage() {
             <br className="hidden sm:block" /> Practical Growth Strategies.
           </h1>
           <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto text-balance">
-            SEO Audit Pro provides practical SEO guides, website audit case studies,
-            and manually prepared audits designed to identify issues and prioritize improvements.
+            Manually prepared SEO audits that find the technical, content, and keyword
+            issues holding your website back — with a clear, prioritized action plan.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/seo-audit-cases/"
+              href="/seo-audit/"
               className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Explore SEO Audit Cases
+              Request an SEO Audit
             </Link>
             <Link
-              href="/seo-audit/"
+              href="/sample-seo-audit-report/"
               className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-gray-400 text-white font-semibold hover:bg-white/10 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Audit Your Website
+              View Sample Report
             </Link>
           </div>
         </div>
       </section>
 
       <div className="container-site py-16 lg:py-24 space-y-24">
+        {/* Specialized SEO Audit Services */}
+        <section>
+          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center mb-4">
+            Specialized SEO Audit Services
+          </h2>
+          <p className="text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
+            Choose the audit scope that matches your website and target markets.
+          </p>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                title: "Website SEO Audit",
+                desc: "A complete technical, on-page, content, and keyword audit for businesses that want a clear roadmap to better rankings.",
+                href: "/seo-audit/",
+                cta: "Learn More",
+              },
+              {
+                title: "International SEO Audit",
+                desc: "Hreflang, canonicals, multilingual URLs, and localized content for sites serving more than one country or language.",
+                href: "/international-seo-audit-services/",
+                cta: "Learn More",
+              },
+              {
+                title: "Manufacturing SEO Audit",
+                desc: "Technical and content audits for B2B manufacturers whose product and capability pages should be found by buyers.",
+                href: "/manufacturing-seo-audit/",
+                cta: "Learn More",
+              },
+            ].map((service) => (
+              <Link
+                key={service.href}
+                href={service.href}
+                className="group flex flex-col rounded-xl border border-[var(--color-border)] p-6 hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-card-hover)] transition-all"
+              >
+                <h3 className="text-lg font-bold font-[family-name:var(--font-heading)] group-hover:text-[var(--color-accent)] transition-colors">
+                  {service.title}
+                </h3>
+                <p className="mt-3 flex-1 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                  {service.desc}
+                </p>
+                <span className="mt-5 inline-flex items-center text-sm font-semibold text-[var(--color-accent)]">
+                  {service.cta} →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* Featured SEO Audit Case */}
         {featuredCase ? (
           <section>
@@ -106,7 +159,7 @@ export default function HomePage() {
 
         {/* Why SEO Audit Pro */}
         <section>
-          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center mb-12">Why SEO Audit Pro</h2>
+          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center mb-12">Why Work With SEO Audit Pro</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { title: "Manual SEO Analysis", desc: "Every audit is prepared by an experienced SEO analyst — not an automated tool generating generic reports." },

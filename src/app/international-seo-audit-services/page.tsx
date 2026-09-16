@@ -1,104 +1,113 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { PricingCards } from "@/components/pricing/PricingCards";
 import { AuditRequestForm } from "@/components/forms/AuditRequestForm";
 import { FiverrButton } from "@/components/cta/FiverrButton";
 import { ServiceSchema } from "@/components/seo/ServiceSchema";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
-import { AUDIT_PACKAGES } from "@/lib/seo-audit";
 
 export const metadata: Metadata = {
-  title: "Professional Website SEO Audit Services",
+  title: "International SEO Audit Services",
   description:
-    "Get a manually prepared SEO audit covering technical issues, content, keywords and on-page SEO. Receive a clear, prioritized action plan for your website.",
-  alternates: { canonical: "https://seoauditpro.cloud/seo-audit/" },
+    "Audit hreflang, canonicals, multilingual URLs, localized content and international targeting for your multilingual or multi-region website.",
+  alternates: {
+    canonical: "https://seoauditpro.cloud/international-seo-audit-services/",
+  },
 };
 
 const firstScreenPoints = [
-  "Prepared manually by an SEO analyst — not an automated, generic report",
-  "Covers technical SEO, on-page SEO, content, keywords, and international SEO",
-  "Prioritized remediation list ordered by impact and implementation effort",
-  "Delivered as a PDF report",
-  "Standard projects delivered within 2 business days",
+  "Hreflang validation across every language and region version",
+  "Canonical and hreflang conflict analysis",
+  "Multilingual URL structure and sitemap review",
+  "Localized title, description, and content assessment",
+  "Country and language targeting recommendations",
+  "Delivered as a PDF report within 4 business days",
 ];
 
 const includedItems = [
   {
-    title: "Full Website SEO Audit",
-    desc: "A complete review of your site covering technical SEO, on-page factors, content quality, keyword targeting, and international signals that affect search visibility.",
+    title: "Hreflang Audit",
+    desc: "Verification of reciprocity, self-referencing tags, and language/region codes across every version of your site.",
   },
   {
-    title: "Technical SEO Audit",
-    desc: "Crawlability, indexation, site architecture, page speed, Core Web Vitals, structured data, mobile usability, and JavaScript rendering.",
+    title: "Canonical Conflict Analysis",
+    desc: "Detection of canonical and hreflang conflicts that cause search engines to index the wrong language version.",
   },
   {
-    title: "Content & Keyword Analysis",
-    desc: "Evaluation of your content strategy, keyword targeting, search intent alignment, duplicate content, and content gap opportunities.",
+    title: "URL Structure Review",
+    desc: "Evaluation of subdirectories, subdomains, and ccTLDs, with a recommendation for the structure that best fits your markets.",
   },
   {
-    title: "On-Page SEO Review",
-    desc: "Title tags, meta descriptions, heading structure, internal linking, image optimization, and URL structure across your key pages.",
+    title: "Multilingual Sitemap Review",
+    desc: "Confirmation that every indexable language version is discoverable and that redirects and noindex pages are excluded.",
   },
   {
-    title: "Prioritized Recommendations",
-    desc: "Every finding is ranked by impact and effort so you know what to fix first, what moves the needle most, and what actions to take next.",
+    title: "Localized Content Assessment",
+    desc: "Review of localized titles, descriptions, headings, and content quality across your target markets.",
   },
   {
-    title: "Delivery Format",
-    desc: "You receive a structured PDF report organized by priority. Each issue includes the finding, why it matters, and how to fix it.",
+    title: "International Targeting",
+    desc: "Geo-specific trust signals, language navigation, and internal linking recommendations for each region.",
   },
 ];
 
 const audiences = [
-  { title: "Business Owners", desc: "Understand why your site is not getting the traffic it should and what to do about it." },
-  { title: "Marketing Teams", desc: "Get a clear roadmap to improve organic search performance and content strategy." },
-  { title: "Agencies & Consultants", desc: "Use our audits to support your client recommendations with independent analysis." },
+  {
+    title: "Multilingual Businesses",
+    desc: "Sites serving two or more languages that need each version indexed in the right market.",
+  },
+  {
+    title: "Multi-Region Brands",
+    desc: "Businesses targeting several countries that want the correct regional pages to rank locally.",
+  },
+  {
+    title: "Marketing Teams",
+    desc: "Teams expanding internationally that need a clear roadmap for their multilingual SEO.",
+  },
 ];
 
 const steps = [
-  { step: 1, title: "Submit", desc: "Provide your website URL, goals, and the pages you want reviewed." },
-  { step: 2, title: "Review", desc: "Your site is reviewed manually by an SEO analyst." },
-  { step: 3, title: "Analyze", desc: "Findings are organized and prioritized by impact and effort." },
-  { step: 4, title: "Receive", desc: "Get your PDF report within the agreed delivery window." },
+  { step: 1, title: "Submit", desc: "Tell us your target countries, languages, and current URL structure." },
+  { step: 2, title: "Review", desc: "We audit your hreflang, canonicals, sitemaps, and localized content." },
+  { step: 3, title: "Prioritize", desc: "Findings are ranked by impact and effort across each market." },
+  { step: 4, title: "Receive", desc: "Get your PDF report within 4 business days." },
 ];
 
 const faqs = [
   {
-    q: "What does a website SEO audit include?",
-    a: "A full website SEO audit covers technical SEO (crawlability, indexing, site speed), on-page factors (titles, headings, content), keyword targeting, and international signals where relevant. You get a prioritized report with clear, actionable recommendations.",
+    q: "What is included in an international SEO audit?",
+    a: "The audit covers hreflang validation, canonical and hreflang conflicts, multilingual URL structure, sitemaps, localized titles and content, international targeting signals, and indexation by country and language.",
   },
   {
-    q: "Is this an automated tool report?",
-    a: "No. Every audit is manually prepared by an SEO analyst. You get context, explanation, and prioritization — not a generic list of issues from an automated crawler.",
+    q: "How is this different from a general SEO audit?",
+    a: "A general audit focuses on one language and market. An international audit adds the layer of managing multiple language and region versions — making sure each version is indexed correctly and the right page appears to the right audience.",
   },
   {
-    q: "How long does an SEO audit take?",
-    a: "Delivery depends on the package: the Starter Audit is delivered within 2 business days, the Growth Audit within 3, and the International SEO Audit within 4.",
+    q: "What URL structure should I use for languages?",
+    a: "Subdirectories (example.com/fr/) consolidate authority and are easiest to maintain. Subdomains do not inherit the full authority of the main domain. Country-code domains carry the strongest geo-signal but cost the most. The audit recommends the structure that fits your specific situation.",
   },
   {
-    q: "What is a technical SEO audit?",
-    a: "A technical SEO audit reviews the underlying infrastructure of your site — crawlability, indexation, page speed, structured data, mobile usability, and architecture — to identify issues that prevent search engines from accessing and ranking your content.",
-  },
-  {
-    q: "Do you offer SEO audit consulting?",
-    a: "Yes. Each audit includes clear explanations and recommendations. If you need help implementing the fixes, we can discuss consulting options.",
+    q: "How long does the international SEO audit take?",
+    a: "The International SEO Audit is delivered within 4 business days for sites up to 50 pages.",
   },
 ];
 
-export default function SeoAuditPage() {
+export default function InternationalSeoAuditServicesPage() {
   return (
     <>
       <ServiceSchema
-        name="Website SEO Audit Service"
-        description="A manually prepared website SEO audit covering technical SEO, on-page SEO, content, keywords, and international SEO, delivered as a prioritized PDF action plan."
-        url="/seo-audit/"
-        offers={AUDIT_PACKAGES.map((p) => ({
-          name: p.name,
-          price: p.price,
-          description: p.description,
-        }))}
+        name="International SEO Audit Service"
+        description="A multilingual and multi-region website audit covering hreflang, canonicals, multilingual URLs, localized content, and international targeting, delivered as a prioritized PDF action plan."
+        url="/international-seo-audit-services/"
+        offers={[
+          {
+            name: "International SEO Audit",
+            price: 249,
+            description:
+              "A multilingual and multi-region audit for sites serving more than one country or language, delivered within 4 business days.",
+          },
+        ]}
       />
-      <BreadcrumbSchema items={[{ label: "SEO Audit" }]} />
+      <BreadcrumbSchema items={[{ label: "International SEO Audit Services" }]} />
 
       <div className="container-content py-12 lg:py-16 space-y-20">
         {/* Hero */}
@@ -107,19 +116,20 @@ export default function SeoAuditPage() {
             <ol className="flex items-center gap-2">
               <li><Link href="/" className="hover:text-[var(--color-accent)]">Home</Link></li>
               <li aria-hidden>/</li>
-              <li className="text-[var(--color-text)]" aria-current="page">SEO Audit</li>
+              <li className="text-[var(--color-text)]" aria-current="page">International SEO Audit Services</li>
             </ol>
           </nav>
 
           <span className="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)]">
-            SEO Audit Services
+            International SEO Audit Services
           </span>
           <h1 className="mt-4 text-3xl lg:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance leading-tight">
-            Professional SEO Audit for Your Website
+            International SEO Audit for Multilingual and Multi-Region Websites
           </h1>
           <p className="mt-6 text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-            Identify the technical, content, keyword, and on-page issues affecting
-            your search visibility with a manually prepared website SEO audit.
+            Ensure the right language and regional version of each page appears to
+            the right audience. We audit hreflang, canonicals, multilingual URLs,
+            and localized content across every market you serve.
           </p>
 
           <ul className="mt-8 grid sm:grid-cols-2 gap-3 max-w-2xl">
@@ -136,13 +146,13 @@ export default function SeoAuditPage() {
               href="#request-audit"
               className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] transition-colors"
             >
-              Request an SEO Audit
+              Request an International SEO Audit
             </a>
             <Link
-              href="/sample-seo-audit-report/"
+              href="/blog/international-seo-audit/"
               className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-[var(--color-border)] font-semibold hover:bg-[var(--color-bg-secondary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] transition-colors"
             >
-              View Sample Report
+              View the Checklist Guide
             </Link>
             <FiverrButton />
           </div>
@@ -160,20 +170,6 @@ export default function SeoAuditPage() {
                 <p className="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section>
-          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Pricing
-          </h2>
-          <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
-            Choose the scope that fits your website. Every package includes a PDF
-            report with prioritized findings and a clear remediation plan.
-          </p>
-          <div className="mt-10">
-            <PricingCards />
           </div>
         </section>
 
@@ -211,14 +207,14 @@ export default function SeoAuditPage() {
         {/* Request Form */}
         <section id="request-audit" className="scroll-mt-24">
           <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Request Your Website Audit
+            Request Your International SEO Audit
           </h2>
           <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
-            Tell us about your website and what you want to achieve. We will review
-            the details and respond within one business day.
+            Tell us about your website, target markets, and current URL structure.
+            We will review the details and respond within one business day.
           </p>
           <div className="mt-10 max-w-2xl mx-auto">
-            <AuditRequestForm />
+            <AuditRequestForm initialPackage="International SEO Audit" />
           </div>
         </section>
 
@@ -243,15 +239,14 @@ export default function SeoAuditPage() {
         {/* Internal Links */}
         <section className="border-t border-[var(--color-border)] pt-12">
           <h2 className="text-lg font-bold font-[family-name:var(--font-heading)] text-center mb-6">
-            Learn More About SEO Audits
+            Learn More
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              { label: "SEO Audit Checklist", href: "/blog/seo-audit-checklist/" },
+              { label: "Website SEO Audit Service", href: "/seo-audit/" },
+              { label: "International SEO Audit Guide", href: "/blog/international-seo-audit/" },
               { label: "Technical SEO Audit Guide", href: "/blog/technical-seo-audit/" },
               { label: "On-Page SEO Audit Guide", href: "/blog/on-page-seo-audit/" },
-              { label: "Content SEO Audit Guide", href: "/blog/content-seo-audit/" },
-              { label: "International SEO Audit Guide", href: "/blog/international-seo-audit/" },
               { label: "Sample SEO Audit Report", href: "/sample-seo-audit-report/" },
             ].map((link) => (
               <Link

@@ -6,19 +6,19 @@ interface FooterLink {
 }
 
 const quickLinks: FooterLink[] = [
+  { label: "Website SEO Audit", href: "/seo-audit/" },
+  { label: "International SEO Audit", href: "/international-seo-audit-services/" },
+  { label: "Manufacturing SEO Audit", href: "/manufacturing-seo-audit/" },
+  { label: "Sample SEO Audit Report", href: "/sample-seo-audit-report/" },
   { label: "SEO Audit Cases", href: "/seo-audit-cases/" },
-  { label: "SEO Audit Guides", href: "/seo-audit-guides/" },
-  { label: "Technical SEO", href: "/technical-seo/" },
-  { label: "Content & Keywords", href: "/content-seo/" },
   { label: "About", href: "/about/" },
-  { label: "Sample SEO Audit Report", href: "/seo-audit/" },
 ];
 
 const seoGuides: FooterLink[] = [
-  { label: "SEO Audit Guide", href: "/seo-audit-guides/" },
-  { label: "Technical SEO Guide", href: "/technical-seo/" },
-  { label: "Content SEO Guide", href: "/content-seo/" },
-  { label: "SEO Audit Cases", href: "/seo-audit-cases/" },
+  { label: "SEO Audit Guides", href: "/seo-audit-guides/" },
+  { label: "Technical SEO Guide", href: "/blog/technical-seo-audit/" },
+  { label: "On-Page SEO Guide", href: "/blog/on-page-seo-audit/" },
+  { label: "International SEO Guide", href: "/blog/international-seo-audit/" },
 ];
 
 const legalLinks: FooterLink[] = [

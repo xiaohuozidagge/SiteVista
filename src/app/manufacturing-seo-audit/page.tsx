@@ -1,104 +1,112 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { PricingCards } from "@/components/pricing/PricingCards";
 import { AuditRequestForm } from "@/components/forms/AuditRequestForm";
 import { FiverrButton } from "@/components/cta/FiverrButton";
 import { ServiceSchema } from "@/components/seo/ServiceSchema";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
-import { AUDIT_PACKAGES } from "@/lib/seo-audit";
 
 export const metadata: Metadata = {
-  title: "Professional Website SEO Audit Services",
+  title: "Manufacturing SEO Audit Services for B2B Websites",
   description:
-    "Get a manually prepared SEO audit covering technical issues, content, keywords and on-page SEO. Receive a clear, prioritized action plan for your website.",
-  alternates: { canonical: "https://seoauditpro.cloud/seo-audit/" },
+    "SEO audits for B2B manufacturing websites. Find the technical, content, and keyword issues limiting your lead generation and discoverability.",
+  alternates: {
+    canonical: "https://seoauditpro.cloud/manufacturing-seo-audit/",
+  },
 };
 
 const firstScreenPoints = [
-  "Prepared manually by an SEO analyst — not an automated, generic report",
-  "Covers technical SEO, on-page SEO, content, keywords, and international SEO",
-  "Prioritized remediation list ordered by impact and implementation effort",
-  "Delivered as a PDF report",
-  "Standard projects delivered within 2 business days",
+  "Technical, on-page, and content audit for B2B manufacturing sites",
+  "Review of product, capability, and industry pages",
+  "Keyword targeting for engineers and procurement buyers",
+  "Prioritized remediation list ordered by impact and effort",
+  "Delivered as a PDF report within 3 business days",
 ];
 
 const includedItems = [
   {
-    title: "Full Website SEO Audit",
-    desc: "A complete review of your site covering technical SEO, on-page factors, content quality, keyword targeting, and international signals that affect search visibility.",
+    title: "Technical SEO Audit",
+    desc: "Crawlability, indexation, site architecture, page speed, and structured data for your product and capability pages.",
   },
   {
-    title: "Technical SEO Audit",
-    desc: "Crawlability, indexation, site architecture, page speed, Core Web Vitals, structured data, mobile usability, and JavaScript rendering.",
+    title: "Product & Capability Page Review",
+    desc: "Assessment of how well your product pages, specifications, and capabilities content matches what buyers search for.",
   },
   {
     title: "Content & Keyword Analysis",
-    desc: "Evaluation of your content strategy, keyword targeting, search intent alignment, duplicate content, and content gap opportunities.",
+    desc: "Keyword targeting for technical and procurement audiences, search intent alignment, and content gap opportunities.",
   },
   {
     title: "On-Page SEO Review",
-    desc: "Title tags, meta descriptions, heading structure, internal linking, image optimization, and URL structure across your key pages.",
+    desc: "Title tags, meta descriptions, headings, internal linking, and image optimization across your key pages.",
+  },
+  {
+    title: "Lead Generation Review",
+    desc: "Evaluation of your calls to action, quote-request paths, and contact points for converting search traffic into inquiries.",
   },
   {
     title: "Prioritized Recommendations",
-    desc: "Every finding is ranked by impact and effort so you know what to fix first, what moves the needle most, and what actions to take next.",
-  },
-  {
-    title: "Delivery Format",
-    desc: "You receive a structured PDF report organized by priority. Each issue includes the finding, why it matters, and how to fix it.",
+    desc: "Every finding ranked by impact and effort so your team knows what to fix first and what drives the most inquiries.",
   },
 ];
 
 const audiences = [
-  { title: "Business Owners", desc: "Understand why your site is not getting the traffic it should and what to do about it." },
-  { title: "Marketing Teams", desc: "Get a clear roadmap to improve organic search performance and content strategy." },
-  { title: "Agencies & Consultants", desc: "Use our audits to support your client recommendations with independent analysis." },
+  {
+    title: "OEMs & Job Shops",
+    desc: "Manufacturers whose product pages should be found by engineers searching for specific capabilities.",
+  },
+  {
+    title: "Industrial Suppliers",
+    desc: "Suppliers of components, materials, and equipment selling to procurement teams.",
+  },
+  {
+    title: "Marketing Teams",
+    desc: "In-house teams that need a clear technical roadmap for manufacturing SEO.",
+  },
 ];
 
 const steps = [
-  { step: 1, title: "Submit", desc: "Provide your website URL, goals, and the pages you want reviewed." },
-  { step: 2, title: "Review", desc: "Your site is reviewed manually by an SEO analyst." },
-  { step: 3, title: "Analyze", desc: "Findings are organized and prioritized by impact and effort." },
-  { step: 4, title: "Receive", desc: "Get your PDF report within the agreed delivery window." },
+  { step: 1, title: "Submit", desc: "Share your website URL, target industries, and lead goals." },
+  { step: 2, title: "Review", desc: "We audit your technical SEO, product pages, and content." },
+  { step: 3, title: "Prioritize", desc: "Findings are ranked by impact and effort for lead generation." },
+  { step: 4, title: "Receive", desc: "Get your PDF report within 3 business days." },
 ];
 
 const faqs = [
   {
-    q: "What does a website SEO audit include?",
-    a: "A full website SEO audit covers technical SEO (crawlability, indexing, site speed), on-page factors (titles, headings, content), keyword targeting, and international signals where relevant. You get a prioritized report with clear, actionable recommendations.",
+    q: "What makes manufacturing SEO different?",
+    a: "Manufacturing buyers search with highly specific technical terms — materials, tolerances, certifications, and capabilities. The audit focuses on matching those searches with product, capability, and industry pages that convert into inquiries.",
   },
   {
-    q: "Is this an automated tool report?",
-    a: "No. Every audit is manually prepared by an SEO analyst. You get context, explanation, and prioritization — not a generic list of issues from an automated crawler.",
+    q: "Which pages should be audited?",
+    a: "The Growth Audit covers up to 30 pages, which for most manufacturers includes the homepage, key product and capability pages, industry pages, and contact or quote-request pages.",
   },
   {
-    q: "How long does an SEO audit take?",
-    a: "Delivery depends on the package: the Starter Audit is delivered within 2 business days, the Growth Audit within 3, and the International SEO Audit within 4.",
+    q: "Will this help us generate more leads?",
+    a: "The audit identifies the technical and content issues preventing your pages from ranking and converting. Fixing those issues is what improves lead generation from search.",
   },
   {
-    q: "What is a technical SEO audit?",
-    a: "A technical SEO audit reviews the underlying infrastructure of your site — crawlability, indexation, page speed, structured data, mobile usability, and architecture — to identify issues that prevent search engines from accessing and ranking your content.",
-  },
-  {
-    q: "Do you offer SEO audit consulting?",
-    a: "Yes. Each audit includes clear explanations and recommendations. If you need help implementing the fixes, we can discuss consulting options.",
+    q: "How long does a manufacturing SEO audit take?",
+    a: "The Growth Audit is delivered within 3 business days for sites up to 30 pages.",
   },
 ];
 
-export default function SeoAuditPage() {
+export default function ManufacturingSeoAuditPage() {
   return (
     <>
       <ServiceSchema
-        name="Website SEO Audit Service"
-        description="A manually prepared website SEO audit covering technical SEO, on-page SEO, content, keywords, and international SEO, delivered as a prioritized PDF action plan."
-        url="/seo-audit/"
-        offers={AUDIT_PACKAGES.map((p) => ({
-          name: p.name,
-          price: p.price,
-          description: p.description,
-        }))}
+        name="Manufacturing SEO Audit Service"
+        description="A B2B website SEO audit for manufacturers, covering technical SEO, product and capability pages, content and keyword targeting, and lead generation, delivered as a prioritized PDF action plan."
+        url="/manufacturing-seo-audit/"
+        offers={[
+          {
+            name: "Growth Audit",
+            price: 129,
+            description:
+              "A complete technical, content, and on-page audit for growing B2B manufacturing sites, delivered within 3 business days.",
+          },
+        ]}
       />
-      <BreadcrumbSchema items={[{ label: "SEO Audit" }]} />
+      <BreadcrumbSchema items={[{ label: "Manufacturing SEO Audit" }]} />
 
       <div className="container-content py-12 lg:py-16 space-y-20">
         {/* Hero */}
@@ -107,19 +115,20 @@ export default function SeoAuditPage() {
             <ol className="flex items-center gap-2">
               <li><Link href="/" className="hover:text-[var(--color-accent)]">Home</Link></li>
               <li aria-hidden>/</li>
-              <li className="text-[var(--color-text)]" aria-current="page">SEO Audit</li>
+              <li className="text-[var(--color-text)]" aria-current="page">Manufacturing SEO Audit</li>
             </ol>
           </nav>
 
           <span className="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)]">
-            SEO Audit Services
+            Manufacturing SEO Audit
           </span>
           <h1 className="mt-4 text-3xl lg:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance leading-tight">
-            Professional SEO Audit for Your Website
+            SEO Audits for B2B Manufacturing Websites
           </h1>
           <p className="mt-6 text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-            Identify the technical, content, keyword, and on-page issues affecting
-            your search visibility with a manually prepared website SEO audit.
+            Manufacturing buyers search with highly specific technical terms. We audit
+            your site to find the issues preventing your product and capability pages
+            from being found — and converting into inquiries.
           </p>
 
           <ul className="mt-8 grid sm:grid-cols-2 gap-3 max-w-2xl">
@@ -136,7 +145,7 @@ export default function SeoAuditPage() {
               href="#request-audit"
               className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] transition-colors"
             >
-              Request an SEO Audit
+              Request a Manufacturing SEO Audit
             </a>
             <Link
               href="/sample-seo-audit-report/"
@@ -160,20 +169,6 @@ export default function SeoAuditPage() {
                 <p className="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section>
-          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Pricing
-          </h2>
-          <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
-            Choose the scope that fits your website. Every package includes a PDF
-            report with prioritized findings and a clear remediation plan.
-          </p>
-          <div className="mt-10">
-            <PricingCards />
           </div>
         </section>
 
@@ -211,14 +206,14 @@ export default function SeoAuditPage() {
         {/* Request Form */}
         <section id="request-audit" className="scroll-mt-24">
           <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Request Your Website Audit
+            Request Your Manufacturing SEO Audit
           </h2>
           <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
-            Tell us about your website and what you want to achieve. We will review
-            the details and respond within one business day.
+            Tell us about your website, products, and target industries. We will
+            review the details and respond within one business day.
           </p>
           <div className="mt-10 max-w-2xl mx-auto">
-            <AuditRequestForm />
+            <AuditRequestForm initialPackage="Growth Audit" />
           </div>
         </section>
 
@@ -243,15 +238,14 @@ export default function SeoAuditPage() {
         {/* Internal Links */}
         <section className="border-t border-[var(--color-border)] pt-12">
           <h2 className="text-lg font-bold font-[family-name:var(--font-heading)] text-center mb-6">
-            Learn More About SEO Audits
+            Learn More
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              { label: "SEO Audit Checklist", href: "/blog/seo-audit-checklist/" },
+              { label: "Website SEO Audit Service", href: "/seo-audit/" },
+              { label: "International SEO Audit Services", href: "/international-seo-audit-services/" },
               { label: "Technical SEO Audit Guide", href: "/blog/technical-seo-audit/" },
               { label: "On-Page SEO Audit Guide", href: "/blog/on-page-seo-audit/" },
-              { label: "Content SEO Audit Guide", href: "/blog/content-seo-audit/" },
-              { label: "International SEO Audit Guide", href: "/blog/international-seo-audit/" },
               { label: "Sample SEO Audit Report", href: "/sample-seo-audit-report/" },
             ].map((link) => (
               <Link

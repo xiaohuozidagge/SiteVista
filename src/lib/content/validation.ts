@@ -14,6 +14,7 @@ export const faqItemSchema = z.object({
 export const blogFrontmatterSchema = z.object({
   title: z.string().min(1, "title is required"),
   description: z.string().min(1, "description is required"),
+  h1: z.string().optional(),
   slug: slugSchema,
   category: z.string().min(1, "category is required"),
   categoryName: z.string().optional(),

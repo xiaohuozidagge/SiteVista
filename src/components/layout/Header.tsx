@@ -11,6 +11,7 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
+  { label: "SEO Audit", href: "/seo-audit/" },
   { label: "SEO Audit Cases", href: "/seo-audit-cases/" },
   { label: "SEO Audit Guides", href: "/seo-audit-guides/" },
   { label: "Technical SEO", href: "/technical-seo/" },
