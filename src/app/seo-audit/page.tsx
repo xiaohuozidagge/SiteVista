@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { PricingCards } from "@/components/pricing/PricingCards";
-import { AuditRequestForm } from "@/components/forms/AuditRequestForm";
-import { FiverrButton } from "@/components/cta/FiverrButton";
+import { JotformAuditOrder } from "@/components/JotformAuditOrder";
+import { TrackedCtaLink } from "@/components/cta/TrackedCtaLink";
 import { ServiceSchema } from "@/components/seo/ServiceSchema";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { AUDIT_PACKAGES } from "@/lib/seo-audit";
@@ -10,16 +10,30 @@ import { AUDIT_PACKAGES } from "@/lib/seo-audit";
 export const metadata: Metadata = {
   title: "Professional Website SEO Audit Services",
   description:
-    "Get a manually prepared SEO audit covering technical issues, content, keywords and on-page SEO. Receive a clear, prioritized action plan for your website.",
+    "Choose an audit package, pay securely through PayPal, and receive a manually prepared PDF SEO audit with prioritized recommendations by email within 3–7 business days.",
   alternates: { canonical: "https://seoauditpro.cloud/seo-audit/" },
+  openGraph: {
+    title: "Professional Website SEO Audit Services",
+    description:
+      "Choose an audit package, pay securely through PayPal, and receive a manually prepared PDF SEO audit with prioritized recommendations by email.",
+    url: "https://seoauditpro.cloud/seo-audit/",
+    type: "website",
+  },
 };
 
 const firstScreenPoints = [
-  "Prepared manually by an SEO analyst — not an automated, generic report",
-  "Covers technical SEO, on-page SEO, content, keywords, and international SEO",
-  "Prioritized remediation list ordered by impact and implementation effort",
-  "Delivered as a PDF report",
-  "Standard projects delivered within 2 business days",
+  "Manually prepared by an SEO analyst",
+  "Technical, on-page, content, and keyword analysis",
+  "Prioritized recommendations based on impact and effort",
+  "Delivered as a structured PDF report by email",
+  "Delivery within 3–7 business days",
+];
+
+const trustBar = [
+  "Secure PayPal Checkout",
+  "Manual SEO Analysis",
+  "PDF Report by Email",
+  "Clear Delivery Timeline",
 ];
 
 const includedItems = [
@@ -45,43 +59,63 @@ const includedItems = [
   },
   {
     title: "Delivery Format",
-    desc: "You receive a structured PDF report organized by priority. Each issue includes the finding, why it matters, and how to fix it.",
+    desc: "Your audit is delivered by email as a structured PDF report organized by priority. Each issue includes the finding, why it matters, and how to fix it.",
   },
 ];
 
-const audiences = [
-  { title: "Business Owners", desc: "Understand why your site is not getting the traffic it should and what to do about it." },
-  { title: "Marketing Teams", desc: "Get a clear roadmap to improve organic search performance and content strategy." },
-  { title: "Agencies & Consultants", desc: "Use our audits to support your client recommendations with independent analysis." },
+const steps = [
+  {
+    step: 1,
+    title: "Choose Your Audit",
+    desc: "Select the package that matches your website size and target markets.",
+  },
+  {
+    step: 2,
+    title: "Submit and Pay",
+    desc: "Provide your website information and complete secure payment through PayPal.",
+  },
+  {
+    step: 3,
+    title: "Manual Analysis",
+    desc: "Your website is reviewed manually using professional SEO tools and analyst evaluation.",
+  },
+  {
+    step: 4,
+    title: "Receive Your Report",
+    desc: "Your completed PDF audit is delivered to the email address submitted with your order.",
+  },
 ];
 
-const steps = [
-  { step: 1, title: "Submit", desc: "Provide your website URL, goals, and the pages you want reviewed." },
-  { step: 2, title: "Review", desc: "Your site is reviewed manually by an SEO analyst." },
-  { step: 3, title: "Analyze", desc: "Findings are organized and prioritized by impact and effort." },
-  { step: 4, title: "Receive", desc: "Get your PDF report within the agreed delivery window." },
+const orderHints = [
+  "Secure payment processed through PayPal",
+  "Order confirmation sent by email",
+  "PDF audit delivered within the selected package timeline",
 ];
 
 const faqs = [
   {
-    q: "What does a website SEO audit include?",
-    a: "A full website SEO audit covers technical SEO (crawlability, indexing, site speed), on-page factors (titles, headings, content), keyword targeting, and international signals where relevant. You get a prioritized report with clear, actionable recommendations.",
+    q: "How do I place an order?",
+    a: "Choose the package that matches your website size in the pricing section above, then complete the order form with your website information. Payment is processed securely through PayPal, and you will receive an order confirmation by email.",
   },
   {
-    q: "Is this an automated tool report?",
-    a: "No. Every audit is manually prepared by an SEO analyst. You get context, explanation, and prioritization — not a generic list of issues from an automated crawler.",
+    q: "When does the delivery period begin?",
+    a: "Delivery time begins after successful payment and receipt of all required website information. The delivery timeline for each package — 3, 5, or 7 business days — is shown before you pay.",
   },
   {
-    q: "How long does an SEO audit take?",
-    a: "Delivery depends on the package: the Starter Audit is delivered within 2 business days, the Growth Audit within 3, and the International SEO Audit within 4.",
+    q: "How will I receive the SEO audit?",
+    a: "Your audit is delivered as a structured PDF report to the email address you submit with your order.",
   },
   {
-    q: "What is a technical SEO audit?",
-    a: "A technical SEO audit reviews the underlying infrastructure of your site — crawlability, indexation, page speed, structured data, mobile usability, and architecture — to identify issues that prevent search engines from accessing and ranking your content.",
+    q: "Does the audit include implementation?",
+    a: "No. The audit includes SEO analysis, findings, and prioritized recommendations. Website implementation, content writing, and link building are not included unless separately agreed.",
   },
   {
-    q: "Do you offer SEO audit consulting?",
-    a: "Yes. Each audit includes clear explanations and recommendations. If you need help implementing the fixes, we can discuss consulting options.",
+    q: "What if my website exceeds the package limit?",
+    a: "Choose the package that matches your website size. If your site is close to or over a limit, or you are unsure which package fits, contact us before ordering and we will help you select the right scope.",
+  },
+  {
+    q: "Is payment secure?",
+    a: "Yes. Payment is processed securely through PayPal, and we do not see or store your payment details.",
   },
 ];
 
@@ -90,12 +124,12 @@ export default function SeoAuditPage() {
     <>
       <ServiceSchema
         name="Website SEO Audit Service"
-        description="A manually prepared website SEO audit covering technical SEO, on-page SEO, content, keywords, and international SEO, delivered as a prioritized PDF action plan."
+        description="A manually prepared website SEO audit covering technical, on-page, content, and keyword analysis, delivered as a prioritized PDF report by email within 3–7 business days."
         url="/seo-audit/"
         offers={AUDIT_PACKAGES.map((p) => ({
           name: p.name,
           price: p.price,
-          description: p.description,
+          description: `${p.pages}. ${p.delivery}. ${p.description}`,
         }))}
       />
       <BreadcrumbSchema items={[{ label: "SEO Audit" }]} />
@@ -118,8 +152,9 @@ export default function SeoAuditPage() {
             Professional SEO Audit for Your Website
           </h1>
           <p className="mt-6 text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-            Identify the technical, content, keyword, and on-page issues affecting
-            your search visibility with a manually prepared website SEO audit.
+            Identify the technical, content, keyword, and on-page issues limiting
+            your search visibility. Receive a manually prepared PDF audit with
+            prioritized, actionable recommendations.
           </p>
 
           <ul className="mt-8 grid sm:grid-cols-2 gap-3 max-w-2xl">
@@ -133,19 +168,55 @@ export default function SeoAuditPage() {
 
           <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-4">
             <a
-              href="#request-audit"
+              href="#pricing"
               className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] transition-colors"
             >
-              Request an SEO Audit
+              Choose an Audit Package
             </a>
-            <Link
+            <TrackedCtaLink
               href="/sample-seo-audit-report/"
+              eventName="sample_report_click"
               className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-[var(--color-border)] font-semibold hover:bg-[var(--color-bg-secondary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] transition-colors"
             >
               View Sample Report
-            </Link>
-            <FiverrButton />
+            </TrackedCtaLink>
           </div>
+        </section>
+
+        {/* Trust bar */}
+        <section className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6 sm:p-8">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+            {trustBar.map((item) => (
+              <div key={item} className="flex items-center justify-center gap-2.5 text-center">
+                <span className="text-[var(--color-success)]" aria-hidden>✓</span>
+                <span className="text-sm font-semibold text-[var(--color-text)]">{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Pricing */}
+        <section id="pricing" className="scroll-mt-24">
+          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
+            Choose Your Audit Package
+          </h2>
+          <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
+            Every package includes a manually prepared PDF report with prioritized
+            findings, delivered to your email within the timeline shown.
+          </p>
+          <div className="mt-10">
+            <PricingCards />
+          </div>
+          <p className="mt-8 text-center text-sm text-[var(--color-text-secondary)]">
+            Not sure which package fits your website?{" "}
+            <TrackedCtaLink
+              href="/contact/"
+              eventName="contact_before_order_click"
+              className="font-semibold text-[var(--color-accent)] hover:underline"
+            >
+              Contact us before ordering.
+            </TrackedCtaLink>
+          </p>
         </section>
 
         {/* What Is Included */}
@@ -163,36 +234,7 @@ export default function SeoAuditPage() {
           </div>
         </section>
 
-        {/* Pricing */}
-        <section>
-          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Pricing
-          </h2>
-          <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
-            Choose the scope that fits your website. Every package includes a PDF
-            report with prioritized findings and a clear remediation plan.
-          </p>
-          <div className="mt-10">
-            <PricingCards />
-          </div>
-        </section>
-
-        {/* Who This Is For */}
-        <section>
-          <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Who This Audit Is For
-          </h2>
-          <div className="mt-10 grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto text-center">
-            {audiences.map((item) => (
-              <div key={item.title} className="p-5 border border-[var(--color-border)] rounded-lg">
-                <h3 className="font-bold font-[family-name:var(--font-heading)]">{item.title}</h3>
-                <p className="mt-2 text-sm text-[var(--color-text-secondary)]">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Delivery Process */}
+        {/* How It Works */}
         <section className="bg-[var(--color-bg-secondary)] rounded-xl p-10 lg:p-16">
           <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
             How It Works
@@ -206,20 +248,76 @@ export default function SeoAuditPage() {
               </div>
             ))}
           </div>
+          <p className="mt-10 text-center text-sm text-[var(--color-text-secondary)]">
+            Delivery time begins after successful payment and receipt of all required
+            website information.
+          </p>
         </section>
 
-        {/* Request Form */}
-        <section id="request-audit" className="scroll-mt-24">
+        {/* Order Form */}
+        <section id="order-form" className="scroll-mt-24">
           <h2 className="text-2xl lg:text-3xl font-bold font-[family-name:var(--font-heading)] text-center">
-            Request Your Website Audit
+            Complete Your SEO Audit Order
           </h2>
           <p className="mt-4 text-[var(--color-text-secondary)] text-center max-w-2xl mx-auto">
-            Tell us about your website and what you want to achieve. We will review
-            the details and respond within one business day.
+            Select your audit package, provide your website information, and complete
+            your payment securely through PayPal.
           </p>
-          <div className="mt-10 max-w-2xl mx-auto">
-            <AuditRequestForm />
+          <ul className="mt-6 grid gap-3 sm:grid-cols-3 max-w-3xl mx-auto">
+            {orderHints.map((hint) => (
+              <li key={hint} className="flex items-start justify-center gap-2 text-sm text-[var(--color-text-secondary)]">
+                <span className="text-[var(--color-success)] mt-0.5" aria-hidden>✓</span>
+                <span>{hint}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10 max-w-3xl mx-auto">
+            <JotformAuditOrder />
           </div>
+
+          <div className="mt-8 max-w-3xl mx-auto space-y-4 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+            <div>
+              <h3 className="font-bold font-[family-name:var(--font-heading)] text-[var(--color-text)]">
+                What Happens After Payment?
+              </h3>
+              <p className="mt-1.5">
+                When your payment is completed, you will receive an order confirmation
+                by email. We will review the information submitted with your order and
+                begin the audit. Your completed PDF report will be delivered to your
+                email within the timeline of the selected package.
+              </p>
+            </div>
+            <p>
+              This service includes SEO analysis, findings, and recommendations.
+              Website implementation, content writing, link building, and guaranteed
+              ranking improvements are not included unless separately agreed.
+            </p>
+            <p>
+              <Link href="/terms/" className="font-semibold text-[var(--color-accent)] hover:underline">Terms of Service</Link>
+              {" · "}
+              <Link href="/privacy-policy/" className="font-semibold text-[var(--color-accent)] hover:underline">Privacy Policy</Link>
+              {" · "}
+              <Link href="/refund-policy/" className="font-semibold text-[var(--color-accent)] hover:underline">Refund Policy</Link>
+            </p>
+          </div>
+        </section>
+
+        {/* Sample Report CTA */}
+        <section className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-10 lg:p-12 text-center">
+          <h2 className="text-xl font-bold font-[family-name:var(--font-heading)]">
+            See What a Professional SEO Audit Includes
+          </h2>
+          <p className="mt-2 text-[var(--color-text-secondary)]">
+            Review a sample PDF report to understand the format, findings, and
+            prioritization you will receive.
+          </p>
+          <TrackedCtaLink
+            href="/sample-seo-audit-report/"
+            eventName="sample_report_click"
+            className="mt-6 inline-flex items-center justify-center px-6 py-3 rounded-md bg-[var(--color-accent)] text-white font-semibold hover:bg-[var(--color-accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] transition-colors"
+          >
+            View Sample Report
+          </TrackedCtaLink>
         </section>
 
         {/* FAQ */}
@@ -240,7 +338,7 @@ export default function SeoAuditPage() {
           </div>
         </section>
 
-        {/* Internal Links */}
+        {/* Related Guides */}
         <section className="border-t border-[var(--color-border)] pt-12">
           <h2 className="text-lg font-bold font-[family-name:var(--font-heading)] text-center mb-6">
             Learn More About SEO Audits

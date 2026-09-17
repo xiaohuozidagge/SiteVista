@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { WEBSITE_TYPES, AUDIT_PACKAGE_OPTIONS } from "@/lib/seo-audit";
 import { submitAuditRequest } from "@/lib/audit-request";
 import { trackAuditEvent } from "@/lib/analytics";
-import { PACKAGE_SELECT_EVENT } from "@/components/pricing/PricingCards";
 
 type Status = "idle" | "submitting" | "success" | "not_configured" | "error";
 
@@ -48,15 +47,6 @@ export function AuditRequestForm({ initialPackage = "" }: { initialPackage?: str
 
   const startFiredRef = useRef(false);
   const lastSubmitRef = useRef(0);
-
-  useEffect(() => {
-    function onSelectPackage(e: Event) {
-      const detail = (e as CustomEvent<string>).detail;
-      if (detail) setPackageName(detail);
-    }
-    window.addEventListener(PACKAGE_SELECT_EVENT, onSelectPackage);
-    return () => window.removeEventListener(PACKAGE_SELECT_EVENT, onSelectPackage);
-  }, []);
 
   function fireStartOnce() {
     if (startFiredRef.current) return;

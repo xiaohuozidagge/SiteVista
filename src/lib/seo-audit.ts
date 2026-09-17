@@ -11,6 +11,7 @@ export interface AuditPackage {
   description: string;
   features: string[];
   delivery: string;
+  ctaLabel: string;
   mostPopular?: boolean;
 }
 
@@ -18,31 +19,33 @@ export const AUDIT_PACKAGES: AuditPackage[] = [
   {
     slug: "starter",
     name: "Starter Audit",
-    price: 49,
-    priceLabel: "$49",
-    pages: "Up to 5 key pages",
+    price: 99,
+    priceLabel: "$99",
+    pages: "Up to 5 URLs",
     description:
-      "A focused on-page and indexability review for smaller sites and landing pages.",
+      "A focused SEO audit for small websites, landing pages, and businesses that need a clear starting point.",
     features: [
-      "Up to 5 key pages",
+      "Up to 5 URLs",
       "Indexability and crawlability review",
       "Title, meta description and heading review",
       "On-page SEO findings",
-      "Prioritized issue list",
+      "Key technical issues",
+      "Prioritized recommendations",
       "PDF report",
     ],
-    delivery: "Delivery within 2 business days",
+    delivery: "Delivery within 3 Business Days",
+    ctaLabel: "Start Starter Audit — $99",
   },
   {
     slug: "growth",
     name: "Growth Audit",
-    price: 129,
-    priceLabel: "$129",
-    pages: "Up to 30 pages",
+    price: 299,
+    priceLabel: "$299",
+    pages: "Up to 50 URLs",
     description:
-      "A complete technical, content, and on-page audit for growing sites.",
+      "A comprehensive technical, content, keyword, and on-page audit for growing websites.",
     features: [
-      "Up to 30 pages",
+      "Up to 50 URLs",
       "Technical SEO audit",
       "Content and keyword analysis",
       "Internal linking review",
@@ -51,30 +54,31 @@ export const AUDIT_PACKAGES: AuditPackage[] = [
       "Prioritized action roadmap",
       "PDF report",
     ],
-    delivery: "Delivery within 3 business days",
+    delivery: "Delivery within 5 Business Days",
+    ctaLabel: "Choose Growth Audit — $299",
     mostPopular: true,
   },
   {
     slug: "international",
     name: "International SEO Audit",
-    price: 249,
-    priceLabel: "$249",
-    pages: "Up to 50 pages",
+    price: 599,
+    priceLabel: "$599",
+    pages: "Up to 100 URLs across up to 5 language or regional markets",
     description:
-      "A multilingual and multi-region audit for sites serving more than one country or language.",
+      "A multilingual and multi-region SEO audit for websites targeting multiple countries or languages.",
     features: [
-      "Up to 50 pages",
       "Everything in Growth Audit",
       "Hreflang validation",
       "Canonical conflict analysis",
       "Multilingual sitemap review",
-      "International URL structure",
+      "International URL structure review",
       "Localized metadata review",
       "Country and language targeting",
       "International content gap analysis",
       "PDF report",
     ],
-    delivery: "Delivery within 4 business days",
+    delivery: "Delivery within 7 Business Days",
+    ctaLabel: "Order International Audit — $599",
   },
 ];
 

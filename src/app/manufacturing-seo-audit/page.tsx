@@ -19,7 +19,7 @@ const firstScreenPoints = [
   "Review of product, capability, and industry pages",
   "Keyword targeting for engineers and procurement buyers",
   "Prioritized remediation list ordered by impact and effort",
-  "Delivered as a PDF report within 3 business days",
+  "Delivered as a PDF report within 5 business days",
 ];
 
 const includedItems = [
@@ -68,7 +68,7 @@ const steps = [
   { step: 1, title: "Submit", desc: "Share your website URL, target industries, and lead goals." },
   { step: 2, title: "Review", desc: "We audit your technical SEO, product pages, and content." },
   { step: 3, title: "Prioritize", desc: "Findings are ranked by impact and effort for lead generation." },
-  { step: 4, title: "Receive", desc: "Get your PDF report within 3 business days." },
+  { step: 4, title: "Receive", desc: "Get your PDF report within 5 business days." },
 ];
 
 const faqs = [
@@ -78,7 +78,7 @@ const faqs = [
   },
   {
     q: "Which pages should be audited?",
-    a: "The Growth Audit covers up to 30 pages, which for most manufacturers includes the homepage, key product and capability pages, industry pages, and contact or quote-request pages.",
+    a: "The Growth Audit covers up to 50 URLs, which for most manufacturers includes the homepage, key product and capability pages, industry pages, and contact or quote-request pages.",
   },
   {
     q: "Will this help us generate more leads?",
@@ -86,7 +86,7 @@ const faqs = [
   },
   {
     q: "How long does a manufacturing SEO audit take?",
-    a: "The Growth Audit is delivered within 3 business days for sites up to 30 pages.",
+    a: "The Growth Audit is delivered within 5 business days for sites up to 50 URLs.",
   },
 ];
 
@@ -100,9 +100,9 @@ export default function ManufacturingSeoAuditPage() {
         offers={[
           {
             name: "Growth Audit",
-            price: 129,
+            price: 299,
             description:
-              "A complete technical, content, and on-page audit for growing B2B manufacturing sites, delivered within 3 business days.",
+              "A complete technical, content, and on-page audit for growing B2B manufacturing sites, delivered within 5 business days.",
           },
         ]}
       />

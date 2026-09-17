@@ -1,19 +1,17 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { AUDIT_PACKAGES } from "@/lib/seo-audit";
+import { AUDIT_PACKAGES, type AuditPackage } from "@/lib/seo-audit";
 import { trackAuditEvent } from "@/lib/analytics";
 
-export const PACKAGE_SELECT_EVENT = "audit:select-package";
-
 export function PricingCards() {
-  function handleSelect(packageName: string) {
-    trackAuditEvent("pricing_package_select", { package_name: packageName });
-    window.dispatchEvent(
-      new CustomEvent<string>(PACKAGE_SELECT_EVENT, { detail: packageName })
-    );
+  function handleSelect(pkg: AuditPackage) {
+    trackAuditEvent("audit_package_cta_click", {
+      package_name: pkg.name,
+      package_price: pkg.price,
+    });
     document
-      .getElementById("request-audit")
+      .getElementById("order-form")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -62,10 +60,10 @@ export function PricingCards() {
 
           <button
             type="button"
-            onClick={() => handleSelect(pkg.name)}
+            onClick={() => handleSelect(pkg)}
             className="mt-4 inline-flex w-full items-center justify-center px-5 py-2.5 rounded-md text-sm font-semibold text-white bg-[var(--color-accent)] hover:bg-[var(--color-accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] transition-colors"
           >
-            Request This Audit
+            {pkg.ctaLabel}
           </button>
         </div>
       ))}

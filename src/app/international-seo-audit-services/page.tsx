@@ -20,7 +20,7 @@ const firstScreenPoints = [
   "Multilingual URL structure and sitemap review",
   "Localized title, description, and content assessment",
   "Country and language targeting recommendations",
-  "Delivered as a PDF report within 4 business days",
+  "Delivered as a PDF report within 7 business days",
 ];
 
 const includedItems = [
@@ -69,7 +69,7 @@ const steps = [
   { step: 1, title: "Submit", desc: "Tell us your target countries, languages, and current URL structure." },
   { step: 2, title: "Review", desc: "We audit your hreflang, canonicals, sitemaps, and localized content." },
   { step: 3, title: "Prioritize", desc: "Findings are ranked by impact and effort across each market." },
-  { step: 4, title: "Receive", desc: "Get your PDF report within 4 business days." },
+  { step: 4, title: "Receive", desc: "Get your PDF report within 7 business days." },
 ];
 
 const faqs = [
@@ -87,7 +87,7 @@ const faqs = [
   },
   {
     q: "How long does the international SEO audit take?",
-    a: "The International SEO Audit is delivered within 4 business days for sites up to 50 pages.",
+    a: "The International SEO Audit is delivered within 7 business days for sites up to 100 URLs across up to 5 language or regional markets.",
   },
 ];
 
@@ -101,9 +101,9 @@ export default function InternationalSeoAuditServicesPage() {
         offers={[
           {
             name: "International SEO Audit",
-            price: 249,
+            price: 599,
             description:
-              "A multilingual and multi-region audit for sites serving more than one country or language, delivered within 4 business days.",
+              "A multilingual and multi-region audit for sites serving more than one country or language, delivered within 7 business days.",
           },
         ]}
       />
